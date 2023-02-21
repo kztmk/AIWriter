@@ -1,34 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { getAuth, User as FirebaseUser } from 'firebase/auth';
+import { useEffect } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import { selectFirebaseAuth, signOut } from './features/firebaseAuth/authSlice';
+import Login from './pages/firebaseAuth/Login';
+import ResetPassword from './pages/firebaseAuth/ResetPassword';
+import Home from './pages/Home';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { user } = useAppSelector(selectFirebaseAuth);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const unsubscribe = getAuth().onAuthStateChanged((user: FirebaseUser | null) => {
+      if (!user) {
+        dispatch(signOut());
+      }
+    });
+
+    return unsubscribe;
+  }, []);
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <Routes>
+      <Route path="/password-reset" element={<ResetPassword />} />
+      <Route path="/" element={user ? <Home /> : <Navigate replace to="/login" />} />
+      <Route path="/login" element={<Login />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;

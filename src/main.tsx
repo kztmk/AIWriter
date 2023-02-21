@@ -4,6 +4,11 @@ import App from './App';
 import './index.css';
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from '@emotion/react';
+import theme from './theme';
+import { Provider } from 'react-redux';
+import store from './app/store';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -20,6 +25,12 @@ const analytics = getAnalytics(app);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>
 );
