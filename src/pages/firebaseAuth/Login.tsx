@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import ErrorDialog from '../../components/ErrorDialog';
 import LoadingLayer from '../../components/LoadingLayer';
 import { selectFirebaseAuth, signIn } from '../../features/firebaseAuth/authSlice';
+import { fetchWordPressList } from '../../features/userWordpress/wordPressListSlice';
 
 const schema = z.object({
   email: z.string().email(),
@@ -76,6 +77,7 @@ const Login = () => {
 
   useEffect(() => {
     if (success === 'login') {
+      dispatch(fetchWordPressList());
       navigate('/');
     }
   });
@@ -86,7 +88,13 @@ const Login = () => {
 
   return (
     <>
-      <Grid container>
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        sx={{ width: '50%', minWidth: '350px', mx: 'auto' }}
+      >
         <Grid item xs={12}>
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -101,7 +109,7 @@ const Login = () => {
             </Typography>
           </Box>
         </Grid>
-        <Grid container component="form" onSubmit={handleSubmit(onSubmit)} xs={12}>
+        <Grid container component="form" onSubmit={handleSubmit(onSubmit)}>
           <Grid item xs={12}>
             <Controller
               name="email"
