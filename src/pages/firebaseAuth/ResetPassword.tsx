@@ -59,7 +59,13 @@ const ResetPassword = () => {
 
   return (
     <>
-      <Grid container>
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        sx={{ width: '50%', minWidth: '350px', mx: 'auto' }}
+      >
         <Grid container component="form" onSubmit={handleSubmit(onSubmit)}>
           <Grid item xs={12}>
             <Controller
