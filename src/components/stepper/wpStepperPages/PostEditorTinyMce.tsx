@@ -260,10 +260,10 @@ const PostEditorTinyMce = (props: StepperProps) => {
     callback: (url: string, meta: { title?: string; alt?: string }) => void,
     value: string,
     meta: {
-      filetype?: string;
-      title?: string;
-      width?: number;
-      height: number;
+      filetype: string;
+      title?: string | undefined;
+      width?: number | undefined;
+      height?: number | undefined;
     }
   ) => {
     if (meta.filetype === 'image') {
@@ -334,8 +334,8 @@ const PostEditorTinyMce = (props: StepperProps) => {
             file_browser_callback_types: 'image',
             image_advtab: true,
             images_upload_url: 'tekitou',
-            images_upload_handler: handleImageUpload,
-            file_picker_callback: handleFilePicker,
+            images_upload_handler: handleImageUpload as any,
+            file_picker_callback: handleFilePicker as any,
             content_style: tinyMceContentStyle,
           }}
         />
