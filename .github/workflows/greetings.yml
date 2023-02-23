@@ -1,0 +1,23 @@
+name: Greetings
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: "Message that will be displayed on users' first issue"
+        pr-message: "Message that will be displayed on users' first pull request"
+    - name: try to access variables
+      run: |
+        echo "use vars" '${{ vars.DEV_VITE_API_KEY }}'
+        echo "use env" '${{ env.DEV_VITE_API_KEY }}'
