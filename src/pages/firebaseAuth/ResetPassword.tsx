@@ -1,15 +1,15 @@
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useForm } from 'react-hook-form';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { resetPassword, selectFirebaseAuth } from '../../features/firebaseAuth/authSlice';
-import LoadingLayer from '../../components/LoadingLayer';
-import ErrorDialog from '../../components/ErrorDialog';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import { z } from 'zod';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import ErrorDialog from '../../components/ErrorDialog';
+import LoadingLayer from '../../components/LoadingLayer';
+import { resetPassword, selectFirebaseAuth } from '../../features/firebaseAuth/authSlice';
 
 const schema = z.object({
   email: z.string().email(),
@@ -22,11 +22,11 @@ const defaultlValues: ResetPasswordInputs = {
 };
 
 const ResetPassword = () => {
-  const { isLoading, isError, success, error, user } = useAppSelector(selectFirebaseAuth);
+  const { isLoading, isError, success, error } = useAppSelector(selectFirebaseAuth);
   const dispatch = useAppDispatch();
 
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
-  const errorObj = error ? { code: error.code, message: error.message } : { code: '', message: '' };
+  const errorObj = error ? { code: '', message: error } : { code: '', message: 'unkonw error.' };
 
   const {
     control,

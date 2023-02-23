@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import ErrorDialog from '../../components/ErrorDialog';
 import LoadingLayer from '../../components/LoadingLayer';
 import { selectFirebaseAuth, signIn } from '../../features/firebaseAuth/authSlice';
+import { fetchSettings } from '../../features/settings/settingsSlice';
 import { fetchWordPressList } from '../../features/userWordpress/wordPressListSlice';
 
 const schema = z.object({
@@ -35,11 +36,11 @@ const defaultlValues: LoginFormInputs = {
 
 /** Firebase  Email & password authentication form */
 const Login = () => {
-  const { isLoading, isError, error, success, user } = useAppSelector(selectFirebaseAuth);
+  const { isLoading, isError, error, success } = useAppSelector(selectFirebaseAuth);
   const dispatch = useAppDispatch();
 
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
-  const errorObj = error ? { code: error.code, message: error.message } : { code: '', message: '' };
+  const errorObj = error ? { code: '', message: error } : { code: '', message: '' };
 
   const navigate = useNavigate();
   const {
@@ -56,17 +57,22 @@ const Login = () => {
     dispatch(signIn({ email: data.email, password: data.password }));
     if (data.rememberMe) {
       localStorage.setItem('loginInfo', JSON.stringify(data));
+    } else {
+      localStorage.removeItem('loginInfo');
     }
   };
 
   useEffect(() => {
     const loginInfo = localStorage.getItem('loginInfo');
     if (loginInfo) {
-      const { email, password } = JSON.parse(loginInfo);
-      setValue('email', email);
-      setValue('password', password);
-      setValue('rememberMe', true);
+      const { email, password, rememberMe } = JSON.parse(loginInfo);
+      if (rememberMe) {
+        setValue('email', email);
+        setValue('password', password);
+        setValue('rememberMe', true);
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -78,6 +84,7 @@ const Login = () => {
   useEffect(() => {
     if (success === 'login') {
       dispatch(fetchWordPressList());
+      dispatch(fetchSettings());
       navigate('/');
     }
   });
@@ -164,7 +171,14 @@ const Login = () => {
                   <FormControlLabel
                     label="Save My info"
                     labelPlacement="end"
-                    control={<Checkbox {...field} id="rememberMe" sx={{ margin: 2 }} />}
+                    control={
+                      <Checkbox
+                        {...field}
+                        id="rememberMe"
+                        sx={{ margin: 2 }}
+                        checked={field.value}
+                      />
+                    }
                   />
                 )}
               />
