@@ -128,9 +128,13 @@ const WordPressList = () => {
 
   return (
     <>
-      <Box sx={{
-        display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', spacing: 2,
-      }}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'flex-end',
+          spacing: 2,
+        }}
       >
         <Tooltip title="Add WordPress">
           <Fab color="primary" onClick={addWordPress}>

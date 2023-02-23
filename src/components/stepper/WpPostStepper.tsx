@@ -48,9 +48,7 @@ const WpPostStepper = (props: PosterProps) => {
   const [publishedUrl, setPublishedUrl] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
   const { closeMe } = props;
-  const {
-    isLoading, isError, error, success, targetWp,
-  } = useAppSelector(selectTargetWp);
+  const { isLoading, isError, error, success, targetWp } = useAppSelector(selectTargetWp);
   const dispatch = useAppDispatch();
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
@@ -95,7 +93,7 @@ const WpPostStepper = (props: PosterProps) => {
       // refresh token
       dispatch(fetchToken(targetWp));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCloseDialog = () => {
@@ -110,9 +108,13 @@ const WpPostStepper = (props: PosterProps) => {
 
   return (
     <Container component="main" sx={{ mb: 4 }}>
-      <Box sx={{
-        display: 'flex', justifyContent: 'flex-end', marginTop: 1, marginX: 2,
-      }}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          marginTop: 1,
+          marginX: 2,
+        }}
       >
         <IconButton onClick={() => closeMe({ openStepper: false, finishState: 'suspension' })}>
           <CloseIcon />
@@ -154,7 +156,10 @@ const WpPostStepper = (props: PosterProps) => {
       </Paper>
       <Box
         sx={{
-          display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000000,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1000000,
         }}
       >
         <Backdrop

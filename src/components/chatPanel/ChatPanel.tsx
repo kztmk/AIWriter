@@ -107,8 +107,9 @@ const ChatPanel = (props: Partial<StepperProps>) => {
         >
           {
             /* Chat screen */
-            // eslint-disable-next-line max-len
-            chatLogs.map((chatlog) => <ChatListItem key={chatlog.id} chatLog={chatlog} showPrompt={showPrompt} />)
+            chatLogs.map((chatlog) => (
+              <ChatListItem key={chatlog.id} chatLog={chatlog} showPrompt={showPrompt} />
+            ))
           }
         </Box>
         <ChatBase addChatLogs={addChatLogs} />

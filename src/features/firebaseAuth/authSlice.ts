@@ -25,11 +25,11 @@ const initialState: FirebaseAuthState = {
 };
 
 export const signIn = createAsyncThunk<
-FirebaseUser,
-{ email: string; password: string },
-{
-  rejectValue: string;
-}
+  FirebaseUser,
+  { email: string; password: string },
+  {
+    rejectValue: string;
+  }
 >('signIn', async (args, thunkApi) => {
   try {
     const auth = getAuth();
@@ -41,11 +41,11 @@ FirebaseUser,
 });
 
 export const resetPassword = createAsyncThunk<
-void,
-{ email: string },
-{
-  rejectValue: string;
-}
+  void,
+  { email: string },
+  {
+    rejectValue: string;
+  }
 >('resetPassword', async (args, thunkApi) => {
   const auth = getAuth();
   try {
@@ -58,11 +58,11 @@ void,
 });
 
 export const signOut = createAsyncThunk<
-void,
-void,
-{
-  rejectValue: string;
-}
+  void,
+  void,
+  {
+    rejectValue: string;
+  }
 >('signOut', async (_, thunkApi) => {
   const auth = getAuth();
   try {

@@ -1,17 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 import type {
-  ChatGptParams, Completion, CompletionErrorResponse, CompletionUsage,
+  ChatGptParams,
+  Completion,
+  CompletionErrorResponse,
+  CompletionUsage,
 } from '../../types/index';
 
 import type { ChatGptParamsWithApiKey } from '../../components/chatPanel/ChatBase';
 
 export const fetchChatGpt = createAsyncThunk<
-{ completion:Completion, requestArgs:ChatGptParams },
-ChatGptParamsWithApiKey,
-{
-  rejectValue: CompletionErrorResponse;
-}
+  { completion: Completion; requestArgs: ChatGptParams },
+  ChatGptParamsWithApiKey,
+  {
+    rejectValue: CompletionErrorResponse;
+  }
 >('fetchChatGpt', async (args, thunkApi) => {
   try {
     const { chatGptApiKey, ...param } = args;
@@ -65,7 +68,10 @@ const initialState: ChatGptResponse = {
   success: 'idle',
   error: {
     error: {
-      message: '', type: '', param: null, code: null,
+      message: '',
+      type: '',
+      param: null,
+      code: null,
     },
   },
   requestArgs: { model: 'text-davinci-003', prompt: '', temperature: 1 },

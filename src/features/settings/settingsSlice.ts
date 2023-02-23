@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {
-  get, getDatabase, ref, set,
-} from 'firebase/database';
+import { get, getDatabase, ref, set } from 'firebase/database';
 
 import type { RootState } from '../../app/store';
 
@@ -28,12 +26,12 @@ const initialState = {
 };
 
 export const setSettings = createAsyncThunk<
-Settings,
-Settings,
-{
-  rejectValue: string;
-  state: RootState;
-}
+  Settings,
+  Settings,
+  {
+    rejectValue: string;
+    state: RootState;
+  }
 >('setSettings', async (args, thunkApi) => {
   try {
     const { user } = thunkApi.getState().firebaseAuth;
@@ -48,12 +46,12 @@ Settings,
 });
 
 export const fetchSettings = createAsyncThunk<
-Settings,
-void,
-{
-  rejectValue: string;
-  state: RootState;
-}
+  Settings,
+  void,
+  {
+    rejectValue: string;
+    state: RootState;
+  }
 >('fetchSettings', async (_, thunkApi) => {
   try {
     const { user } = thunkApi.getState().firebaseAuth;

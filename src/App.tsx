@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 
 import { getAuth, User as FirebaseUser } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import AppDrawer from './components/navigation/AppDrawer';
@@ -29,7 +29,7 @@ const App = () => {
     });
 
     return unsubscribe;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -38,14 +38,16 @@ const App = () => {
       <MenuBar open={open} openDrawer={setOpen} />
       <AppDrawer open={open} setOpen={setOpen} />
       <Box component="main" sx={{ mt: 8, flexGrow: 1, p: 3 }}>
-        <Routes>
-          <Route path="/wordpress" element={<TargetWordPress />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/add_wordpress" element={<AddWordPress />} />
-          <Route path="/password-reset" element={<ResetPassword />} />
-          <Route path="/" element={user ? <WordPressList /> : <Navigate replace to="/login" />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/wordpress" element={<TargetWordPress />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/add_wordpress" element={<AddWordPress />} />
+            <Route path="/password-reset" element={<ResetPassword />} />
+            <Route path="/" element={user ? <WordPressList /> : <Navigate replace to="/login" />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </BrowserRouter>
       </Box>
     </Box>
   );

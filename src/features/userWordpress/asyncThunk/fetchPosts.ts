@@ -4,11 +4,11 @@ import type { Post, WpRestApiErrorResponse } from '../../../types';
 import generateGetPostsEndpoint from './generateParams';
 
 const fetchPosts = createAsyncThunk<
-Post[],
-PostsFilterArguments,
-{
-  rejectValue: string;
-}
+  Post[],
+  PostsFilterArguments,
+  {
+    rejectValue: string;
+  }
 >('targetWp/fetchPosts', async (args, thunkApi) => {
   try {
     const url = `${args.url}/wp-json/wp/v2/posts?${generateGetPostsEndpoint(args)}`;

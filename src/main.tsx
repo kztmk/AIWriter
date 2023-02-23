@@ -25,11 +25,9 @@ initializeApp(firebaseConfig);
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
     </ThemeProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

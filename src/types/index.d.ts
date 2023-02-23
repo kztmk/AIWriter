@@ -176,16 +176,16 @@ export type Post = {
   ping_status: 'open' | 'closed';
   /** The format for the post. */
   format:
-  | 'standard'
-  | 'aside'
-  | 'chat'
-  | 'gallery'
-  | 'link'
-  | 'image'
-  | 'quote'
-  | 'status'
-  | 'video'
-  | 'audio';
+    | 'standard'
+    | 'aside'
+    | 'chat'
+    | 'gallery'
+    | 'link'
+    | 'image'
+    | 'quote'
+    | 'status'
+    | 'video'
+    | 'audio';
   /** Meta fields. */
   meta: object;
   /** Whether or not the post should be treated as sticky. */
@@ -471,13 +471,13 @@ export type Attachment = {
 export type NavMenuItem = {
   /** The title for the object. */
   title:
-  | string
-  | {
-    /** Title for the object, as it exists in the database. */
-    raw: string;
-    /** HTML title for the object, transformed for display. */
-    rendered: string;
-  };
+    | string
+    | {
+        /** Title for the object, as it exists in the database. */
+        raw: string;
+        /** HTML title for the object, transformed for display. */
+        rendered: string;
+      };
   /** Unique identifier for the object. */
   id: number;
   /** The singular label used to describe this type of menu item. */
@@ -540,13 +540,13 @@ export type NavMenuItemRevision = {
   slug: string;
   /** The title for the object. */
   title:
-  | string
-  | {
-    /** Title for the object, as it exists in the database. */
-    raw: string;
-    /** HTML title for the object, transformed for display. */
-    rendered: string;
-  };
+    | string
+    | {
+        /** Title for the object, as it exists in the database. */
+        raw: string;
+        /** HTML title for the object, transformed for display. */
+        rendered: string;
+      };
   /** Preview link for the post. */
   preview_link: string;
 };
@@ -659,22 +659,22 @@ export type WpTemplate = {
   origin: string;
   /** Content of template. */
   content:
-  | {
-    /** Content for the template, as it exists in the database. */
-    raw: string;
-    /** Version of the content block format used by the template. */
-    block_version: number;
-  }
-  | string;
+    | {
+        /** Content for the template, as it exists in the database. */
+        raw: string;
+        /** Version of the content block format used by the template. */
+        block_version: number;
+      }
+    | string;
   /** Title of template. */
   title:
-  | {
-    /** Title for the template, as it exists in the database. */
-    raw: string;
-    /** HTML title for the template, transformed for display. */
-    rendered: string;
-  }
-  | string;
+    | {
+        /** Title for the template, as it exists in the database. */
+        raw: string;
+        /** HTML title for the template, transformed for display. */
+        rendered: string;
+      }
+    | string;
   /** Description of template. */
   description: string;
   /** Status of template. */
@@ -713,22 +713,22 @@ export type WpTemplateRevision = {
   slug: string;
   /** Title of template. */
   title:
-  | {
-    /** Title for the template, as it exists in the database. */
-    raw: string;
-    /** HTML title for the template, transformed for display. */
-    rendered: string;
-  }
-  | string;
+    | {
+        /** Title for the template, as it exists in the database. */
+        raw: string;
+        /** HTML title for the template, transformed for display. */
+        rendered: string;
+      }
+    | string;
   /** Content of template. */
   content:
-  | {
-    /** Content for the template, as it exists in the database. */
-    raw: string;
-    /** Version of the content block format used by the template. */
-    block_version: number;
-  }
-  | string;
+    | {
+        /** Content for the template, as it exists in the database. */
+        raw: string;
+        /** Version of the content block format used by the template. */
+        block_version: number;
+      }
+    | string;
 };
 /**
  * Object type for the "wp_template_part" object in the route /wp/v2/template-parts.
@@ -748,22 +748,22 @@ export type WpTemplatePart = {
   origin: string;
   /** Content of template. */
   content:
-  | {
-    /** Content for the template, as it exists in the database. */
-    raw: string;
-    /** Version of the content block format used by the template. */
-    block_version: number;
-  }
-  | string;
+    | {
+        /** Content for the template, as it exists in the database. */
+        raw: string;
+        /** Version of the content block format used by the template. */
+        block_version: number;
+      }
+    | string;
   /** Title of template. */
   title:
-  | {
-    /** Title for the template, as it exists in the database. */
-    raw: string;
-    /** HTML title for the template, transformed for display. */
-    rendered: string;
-  }
-  | string;
+    | {
+        /** Title for the template, as it exists in the database. */
+        raw: string;
+        /** HTML title for the template, transformed for display. */
+        rendered: string;
+      }
+    | string;
   /** Description of template. */
   description: string;
   /** Status of template. */
@@ -802,22 +802,22 @@ export type WpTemplatePartRevision = {
   slug: string;
   /** Title of template. */
   title:
-  | {
-    /** Title for the template, as it exists in the database. */
-    raw: string;
-    /** HTML title for the template, transformed for display. */
-    rendered: string;
-  }
-  | string;
+    | {
+        /** Title for the template, as it exists in the database. */
+        raw: string;
+        /** HTML title for the template, transformed for display. */
+        rendered: string;
+      }
+    | string;
   /** Content of template. */
   content:
-  | {
-    /** Content for the template, as it exists in the database. */
-    raw: string;
-    /** Version of the content block format used by the template. */
-    block_version: number;
-  }
-  | string;
+    | {
+        /** Content for the template, as it exists in the database. */
+        raw: string;
+        /** Version of the content block format used by the template. */
+        block_version: number;
+      }
+    | string;
 };
 /**
  * Object type for the "wp_navigation" object in the route /wp/v2/navigation.
@@ -1373,13 +1373,13 @@ export type WpGlobalStyles = {
   settings: Record<string, unknown>;
   /** Title of the global styles variation. */
   title:
-  | {
-    /** Title for the global styles variation, as it exists in the database. */
-    raw: string;
-    /** HTML title for the post, transformed for display. */
-    rendered: string;
-  }
-  | string;
+    | {
+        /** Title for the global styles variation, as it exists in the database. */
+        raw: string;
+        /** HTML title for the post, transformed for display. */
+        rendered: string;
+      }
+    | string;
 };
 /**
  * Object type for the "settings" object in the route /wp/v2/settings.
@@ -1490,67 +1490,67 @@ export type Theme = {
     'block-template-parts': boolean;
     /** Custom background if defined by the theme. */
     'custom-background':
-    | boolean
-    | {
-      /** */
-      'default-image': string;
-      /** */
-      'default-preset': 'default' | 'fill' | 'fit' | 'repeat' | 'custom';
-      /** */
-      'default-position-x': 'left' | 'center' | 'right';
-      /** */
-      'default-position-y': 'left' | 'center' | 'right';
-      /** */
-      'default-size': 'auto' | 'contain' | 'cover';
-      /** */
-      'default-repeat': 'repeat-x' | 'repeat-y' | 'repeat' | 'no-repeat';
-      /** */
-      'default-attachment': 'scroll' | 'fixed';
-      /** */
-      'default-color': string;
-    };
+      | boolean
+      | {
+          /** */
+          'default-image': string;
+          /** */
+          'default-preset': 'default' | 'fill' | 'fit' | 'repeat' | 'custom';
+          /** */
+          'default-position-x': 'left' | 'center' | 'right';
+          /** */
+          'default-position-y': 'left' | 'center' | 'right';
+          /** */
+          'default-size': 'auto' | 'contain' | 'cover';
+          /** */
+          'default-repeat': 'repeat-x' | 'repeat-y' | 'repeat' | 'no-repeat';
+          /** */
+          'default-attachment': 'scroll' | 'fixed';
+          /** */
+          'default-color': string;
+        };
     /** Custom header if defined by the theme. */
     'custom-header':
-    | boolean
-    | {
-      /** */
-      'default-image': string;
-      /** */
-      'random-default': boolean;
-      /** */
-      width: number;
-      /** */
-      height: number;
-      /** */
-      'flex-height': boolean;
-      /** */
-      'flex-width': boolean;
-      /** */
-      'default-text-color': string;
-      /** */
-      'header-text': boolean;
-      /** */
-      uploads: boolean;
-      /** */
-      video: boolean;
-    };
+      | boolean
+      | {
+          /** */
+          'default-image': string;
+          /** */
+          'random-default': boolean;
+          /** */
+          width: number;
+          /** */
+          height: number;
+          /** */
+          'flex-height': boolean;
+          /** */
+          'flex-width': boolean;
+          /** */
+          'default-text-color': string;
+          /** */
+          'header-text': boolean;
+          /** */
+          uploads: boolean;
+          /** */
+          video: boolean;
+        };
     /** Custom logo if defined by the theme. */
     'custom-logo':
-    | boolean
-    | {
-      /** */
-      width: number;
-      /** */
-      height: number;
-      /** */
-      'flex-width': boolean;
-      /** */
-      'flex-height': boolean;
-      /** */
-      'header-text': string[];
-      /** */
-      'unlink-homepage-logo': boolean;
-    };
+      | boolean
+      | {
+          /** */
+          width: number;
+          /** */
+          height: number;
+          /** */
+          'flex-width': boolean;
+          /** */
+          'flex-height': boolean;
+          /** */
+          'header-text': string[];
+          /** */
+          'unlink-homepage-logo': boolean;
+        };
     /** Whether the theme enables Selective Refresh
      * for Widgets being managed with the Customizer. */
     'customize-selective-refresh-widgets': boolean;
@@ -1566,50 +1566,50 @@ export type Theme = {
     'disable-layout-styles': boolean;
     /** Custom color palette if defined by the theme. */
     'editor-color-palette':
-    | boolean
-    | {
-      /** */
-      name: string;
-      /** */
-      slug: string;
-      /** */
-      color: string;
-    }[];
+      | boolean
+      | {
+          /** */
+          name: string;
+          /** */
+          slug: string;
+          /** */
+          color: string;
+        }[];
     /** Custom font sizes if defined by the theme. */
     'editor-font-sizes':
-    | boolean
-    | {
-      /** */
-      name: string;
-      /** */
-      size: number;
-      /** */
-      slug: string;
-    }[];
+      | boolean
+      | {
+          /** */
+          name: string;
+          /** */
+          size: number;
+          /** */
+          slug: string;
+        }[];
     /** Custom gradient presets if defined by the theme. */
     'editor-gradient-presets':
-    | boolean
-    | {
-      /** */
-      name: string;
-      /** */
-      gradient: string;
-      /** */
-      slug: string;
-    }[];
+      | boolean
+      | {
+          /** */
+          name: string;
+          /** */
+          gradient: string;
+          /** */
+          slug: string;
+        }[];
     /** Whether theme opts in to the editor styles CSS wrapper. */
     'editor-styles': boolean;
     /** Allows use of HTML5 markup for search forms,
      * comment forms, comment lists, gallery, and caption. */
     html5:
-    | boolean
-    | 'search-form'
-    | 'comment-form'
-    | 'comment-list'
-    | 'gallery'
-    | 'caption'
-    | 'script'
-    | 'style'[];
+      | boolean
+      | 'search-form'
+      | 'comment-form'
+      | 'comment-list'
+      | 'gallery'
+      | 'caption'
+      | 'script'
+      | 'style'[];
     /** Post formats supported. */
     formats: string[];
     /** The post types that support thumbnails or true if all post types are supported. */
@@ -1895,33 +1895,33 @@ export type GetPostsRequestArguments = {
   order?: 'asc' | 'desc';
   /** Sort collection by post attribute. */
   orderby?:
-  | 'author'
-  | 'date'
-  | 'id'
-  | 'include'
-  | 'modified'
-  | 'parent'
-  | 'relevance'
-  | 'slug'
-  | 'include_slugs'
-  | 'title';
+    | 'author'
+    | 'date'
+    | 'id'
+    | 'include'
+    | 'modified'
+    | 'parent'
+    | 'relevance'
+    | 'slug'
+    | 'include_slugs'
+    | 'title';
   /** Limit result set to posts with one or more specific slugs. */
   slug?: string[];
   /** Limit result set to posts assigned one or more statuses. */
   status?:
-  | 'publish'
-  | 'future'
-  | 'draft'
-  | 'pending'
-  | 'private'
-  | 'trash'
-  | 'auto-draft'
-  | 'inherit'
-  | 'request-pending'
-  | 'request-confirmed'
-  | 'request-failed'
-  | 'request-completed'
-  | 'any'[];
+    | 'publish'
+    | 'future'
+    | 'draft'
+    | 'pending'
+    | 'private'
+    | 'trash'
+    | 'auto-draft'
+    | 'inherit'
+    | 'request-pending'
+    | 'request-confirmed'
+    | 'request-failed'
+    | 'request-completed'
+    | 'any'[];
   /** Limit result set based on relationship between multiple taxonomies. */
   tax_relation?: 'AND' | 'OR';
   /** Limit result set to items with specific terms assigned in the categories taxonomy. */
@@ -1987,16 +1987,16 @@ export type CreatePostRequestArguments = {
   ping_status?: 'open' | 'closed';
   /** The format for the post. */
   format?:
-  | 'standard'
-  | 'aside'
-  | 'chat'
-  | 'gallery'
-  | 'link'
-  | 'image'
-  | 'quote'
-  | 'status'
-  | 'video'
-  | 'audio';
+    | 'standard'
+    | 'aside'
+    | 'chat'
+    | 'gallery'
+    | 'link'
+    | 'image'
+    | 'quote'
+    | 'status'
+    | 'video'
+    | 'audio';
   /** Meta fields. */
   meta?: object;
   /** Whether or not the post should be treated as sticky. */
@@ -2070,16 +2070,16 @@ export type CreatePostRevisionRequestArguments = {
   ping_status?: 'open' | 'closed';
   /** The format for the post. */
   format?:
-  | 'standard'
-  | 'aside'
-  | 'chat'
-  | 'gallery'
-  | 'link'
-  | 'image'
-  | 'quote'
-  | 'status'
-  | 'video'
-  | 'audio';
+    | 'standard'
+    | 'aside'
+    | 'chat'
+    | 'gallery'
+    | 'link'
+    | 'image'
+    | 'quote'
+    | 'status'
+    | 'video'
+    | 'audio';
   /** Meta fields. */
   meta?: object;
   /** Whether or not the post should be treated as sticky. */
@@ -2127,17 +2127,17 @@ export type GetPagesRequestArguments = {
   order?: 'asc' | 'desc';
   /** Sort collection by post attribute. */
   orderby?:
-  | 'author'
-  | 'date'
-  | 'id'
-  | 'include'
-  | 'modified'
-  | 'parent'
-  | 'relevance'
-  | 'slug'
-  | 'include_slugs'
-  | 'title'
-  | 'menu_order';
+    | 'author'
+    | 'date'
+    | 'id'
+    | 'include'
+    | 'modified'
+    | 'parent'
+    | 'relevance'
+    | 'slug'
+    | 'include_slugs'
+    | 'title'
+    | 'menu_order';
   /** Limit result set to items with particular parent IDs. */
   parent?: number[];
   /** Limit result set to all items except those of a particular parent ID. */
@@ -2146,19 +2146,19 @@ export type GetPagesRequestArguments = {
   slug?: string[];
   /** Limit result set to posts assigned one or more statuses. */
   status?:
-  | 'publish'
-  | 'future'
-  | 'draft'
-  | 'pending'
-  | 'private'
-  | 'trash'
-  | 'auto-draft'
-  | 'inherit'
-  | 'request-pending'
-  | 'request-confirmed'
-  | 'request-failed'
-  | 'request-completed'
-  | 'any'[];
+    | 'publish'
+    | 'future'
+    | 'draft'
+    | 'pending'
+    | 'private'
+    | 'trash'
+    | 'auto-draft'
+    | 'inherit'
+    | 'request-pending'
+    | 'request-confirmed'
+    | 'request-failed'
+    | 'request-completed'
+    | 'any'[];
 };
 /**
  * Endpoint request arguments for the POST /wp/v2/pages route.
@@ -2319,16 +2319,16 @@ export type GetAttachmentsRequestArguments = {
   order?: 'asc' | 'desc';
   /** Sort collection by post attribute. */
   orderby?:
-  | 'author'
-  | 'date'
-  | 'id'
-  | 'include'
-  | 'modified'
-  | 'parent'
-  | 'relevance'
-  | 'slug'
-  | 'include_slugs'
-  | 'title';
+    | 'author'
+    | 'date'
+    | 'id'
+    | 'include'
+    | 'modified'
+    | 'parent'
+    | 'relevance'
+    | 'slug'
+    | 'include_slugs'
+    | 'title';
   /** Limit result set to items with particular parent IDs. */
   parent?: number[];
   /** Limit result set to all items except those of a particular parent ID. */
@@ -2420,34 +2420,34 @@ export type GetNavMenuItemsRequestArguments = {
   order?: 'asc' | 'desc';
   /** Sort collection by object attribute. */
   orderby?:
-  | 'author'
-  | 'date'
-  | 'id'
-  | 'include'
-  | 'modified'
-  | 'parent'
-  | 'relevance'
-  | 'slug'
-  | 'include_slugs'
-  | 'title'
-  | 'menu_order';
+    | 'author'
+    | 'date'
+    | 'id'
+    | 'include'
+    | 'modified'
+    | 'parent'
+    | 'relevance'
+    | 'slug'
+    | 'include_slugs'
+    | 'title'
+    | 'menu_order';
   /** Limit result set to posts with one or more specific slugs. */
   slug?: string[];
   /** Limit result set to posts assigned one or more statuses. */
   status?:
-  | 'publish'
-  | 'future'
-  | 'draft'
-  | 'pending'
-  | 'private'
-  | 'trash'
-  | 'auto-draft'
-  | 'inherit'
-  | 'request-pending'
-  | 'request-confirmed'
-  | 'request-failed'
-  | 'request-completed'
-  | 'any'[];
+    | 'publish'
+    | 'future'
+    | 'draft'
+    | 'pending'
+    | 'private'
+    | 'trash'
+    | 'auto-draft'
+    | 'inherit'
+    | 'request-pending'
+    | 'request-confirmed'
+    | 'request-failed'
+    | 'request-completed'
+    | 'any'[];
   /** Limit result set based on relationship between multiple taxonomies. */
   tax_relation?: 'AND' | 'OR';
   /** Limit result set to items with specific terms assigned in the menus taxonomy. */
@@ -2463,13 +2463,13 @@ export type GetNavMenuItemsRequestArguments = {
 export type CreateNavMenuItemRequestArguments = {
   /** The title for the object. */
   title?:
-  | string
-  | {
-    /** Title for the object, as it exists in the database. */
-    raw: string;
-    /** HTML title for the object, transformed for display. */
-    rendered: string;
-  };
+    | string
+    | {
+        /** Title for the object, as it exists in the database. */
+        raw: string;
+        /** HTML title for the object, transformed for display. */
+        rendered: string;
+      };
   /** The family of objects originally represented, such as "post_type" or "taxonomy". */
   type?: 'taxonomy' | 'post_type' | 'post_type_archive' | 'custom';
   /** A named status for the object. */
@@ -2517,13 +2517,13 @@ export type CreateNavMenuItemRevisionRequestArguments = {
   parent?: number;
   /** The title for the object. */
   title?:
-  | string
-  | {
-    /** Title for the object, as it exists in the database. */
-    raw: string;
-    /** HTML title for the object, transformed for display. */
-    rendered: string;
-  };
+    | string
+    | {
+        /** Title for the object, as it exists in the database. */
+        raw: string;
+        /** HTML title for the object, transformed for display. */
+        rendered: string;
+      };
   /** The family of objects originally represented, such as "post_type" or "taxonomy". */
   type?: 'taxonomy' | 'post_type' | 'post_type_archive' | 'custom';
   /** A named status for the object. */
@@ -2582,33 +2582,33 @@ export type GetWpBlocksRequestArguments = {
   order?: 'asc' | 'desc';
   /** Sort collection by post attribute. */
   orderby?:
-  | 'author'
-  | 'date'
-  | 'id'
-  | 'include'
-  | 'modified'
-  | 'parent'
-  | 'relevance'
-  | 'slug'
-  | 'include_slugs'
-  | 'title';
+    | 'author'
+    | 'date'
+    | 'id'
+    | 'include'
+    | 'modified'
+    | 'parent'
+    | 'relevance'
+    | 'slug'
+    | 'include_slugs'
+    | 'title';
   /** Limit result set to posts with one or more specific slugs. */
   slug?: string[];
   /** Limit result set to posts assigned one or more statuses. */
   status?:
-  | 'publish'
-  | 'future'
-  | 'draft'
-  | 'pending'
-  | 'private'
-  | 'trash'
-  | 'auto-draft'
-  | 'inherit'
-  | 'request-pending'
-  | 'request-confirmed'
-  | 'request-failed'
-  | 'request-completed'
-  | 'any'[];
+    | 'publish'
+    | 'future'
+    | 'draft'
+    | 'pending'
+    | 'private'
+    | 'trash'
+    | 'auto-draft'
+    | 'inherit'
+    | 'request-pending'
+    | 'request-confirmed'
+    | 'request-failed'
+    | 'request-completed'
+    | 'any'[];
 };
 /**
  * Endpoint request arguments for the POST /wp/v2/blocks route.
@@ -2708,22 +2708,22 @@ export type CreateWpTemplateRequestArguments = {
   type?: string;
   /** Content of template. */
   content?:
-  | {
-    /** Content for the template, as it exists in the database. */
-    raw: string;
-    /** Version of the content block format used by the template. */
-    block_version: number;
-  }
-  | string;
+    | {
+        /** Content for the template, as it exists in the database. */
+        raw: string;
+        /** Version of the content block format used by the template. */
+        block_version: number;
+      }
+    | string;
   /** Title of template. */
   title?:
-  | {
-    /** Title for the template, as it exists in the database. */
-    raw: string;
-    /** HTML title for the template, transformed for display. */
-    rendered: string;
-  }
-  | string;
+    | {
+        /** Title for the template, as it exists in the database. */
+        raw: string;
+        /** HTML title for the template, transformed for display. */
+        rendered: string;
+      }
+    | string;
   /** Description of template. */
   description?: string;
   /** Status of template. */
@@ -2754,22 +2754,22 @@ export type CreateWpTemplateRevisionRequestArguments = {
   type?: string;
   /** Content of template. */
   content?:
-  | {
-    /** Content for the template, as it exists in the database. */
-    raw: string;
-    /** Version of the content block format used by the template. */
-    block_version: number;
-  }
-  | string;
+    | {
+        /** Content for the template, as it exists in the database. */
+        raw: string;
+        /** Version of the content block format used by the template. */
+        block_version: number;
+      }
+    | string;
   /** Title of template. */
   title?:
-  | {
-    /** Title for the template, as it exists in the database. */
-    raw: string;
-    /** HTML title for the template, transformed for display. */
-    rendered: string;
-  }
-  | string;
+    | {
+        /** Title for the template, as it exists in the database. */
+        raw: string;
+        /** HTML title for the template, transformed for display. */
+        rendered: string;
+      }
+    | string;
   /** Description of template. */
   description?: string;
   /** Status of template. */
@@ -2802,22 +2802,22 @@ export type CreateWpTemplatePartRequestArguments = {
   type?: string;
   /** Content of template. */
   content?:
-  | {
-    /** Content for the template, as it exists in the database. */
-    raw: string;
-    /** Version of the content block format used by the template. */
-    block_version: number;
-  }
-  | string;
+    | {
+        /** Content for the template, as it exists in the database. */
+        raw: string;
+        /** Version of the content block format used by the template. */
+        block_version: number;
+      }
+    | string;
   /** Title of template. */
   title?:
-  | {
-    /** Title for the template, as it exists in the database. */
-    raw: string;
-    /** HTML title for the template, transformed for display. */
-    rendered: string;
-  }
-  | string;
+    | {
+        /** Title for the template, as it exists in the database. */
+        raw: string;
+        /** HTML title for the template, transformed for display. */
+        rendered: string;
+      }
+    | string;
   /** Description of template. */
   description?: string;
   /** Status of template. */
@@ -2850,22 +2850,22 @@ export type CreateWpTemplatePartRevisionRequestArguments = {
   type?: string;
   /** Content of template. */
   content?:
-  | {
-    /** Content for the template, as it exists in the database. */
-    raw: string;
-    /** Version of the content block format used by the template. */
-    block_version: number;
-  }
-  | string;
+    | {
+        /** Content for the template, as it exists in the database. */
+        raw: string;
+        /** Version of the content block format used by the template. */
+        block_version: number;
+      }
+    | string;
   /** Title of template. */
   title?:
-  | {
-    /** Title for the template, as it exists in the database. */
-    raw: string;
-    /** HTML title for the template, transformed for display. */
-    rendered: string;
-  }
-  | string;
+    | {
+        /** Title for the template, as it exists in the database. */
+        raw: string;
+        /** HTML title for the template, transformed for display. */
+        rendered: string;
+      }
+    | string;
   /** Description of template. */
   description?: string;
   /** Status of template. */
@@ -2905,33 +2905,33 @@ export type GetWpNavigationsRequestArguments = {
   order?: 'asc' | 'desc';
   /** Sort collection by post attribute. */
   orderby?:
-  | 'author'
-  | 'date'
-  | 'id'
-  | 'include'
-  | 'modified'
-  | 'parent'
-  | 'relevance'
-  | 'slug'
-  | 'include_slugs'
-  | 'title';
+    | 'author'
+    | 'date'
+    | 'id'
+    | 'include'
+    | 'modified'
+    | 'parent'
+    | 'relevance'
+    | 'slug'
+    | 'include_slugs'
+    | 'title';
   /** Limit result set to posts with one or more specific slugs. */
   slug?: string[];
   /** Limit result set to posts assigned one or more statuses. */
   status?:
-  | 'publish'
-  | 'future'
-  | 'draft'
-  | 'pending'
-  | 'private'
-  | 'trash'
-  | 'auto-draft'
-  | 'inherit'
-  | 'request-pending'
-  | 'request-confirmed'
-  | 'request-failed'
-  | 'request-completed'
-  | 'any'[];
+    | 'publish'
+    | 'future'
+    | 'draft'
+    | 'pending'
+    | 'private'
+    | 'trash'
+    | 'auto-draft'
+    | 'inherit'
+    | 'request-pending'
+    | 'request-confirmed'
+    | 'request-failed'
+    | 'request-completed'
+    | 'any'[];
 };
 /**
  * Endpoint request arguments for the POST /wp/v2/navigation route.
@@ -3034,14 +3034,14 @@ export type GetCategoriesRequestArguments = {
   order?: 'asc' | 'desc';
   /** Sort collection by term attribute. */
   orderby?:
-  | 'id'
-  | 'include'
-  | 'name'
-  | 'slug'
-  | 'include_slugs'
-  | 'term_group'
-  | 'description'
-  | 'count';
+    | 'id'
+    | 'include'
+    | 'name'
+    | 'slug'
+    | 'include_slugs'
+    | 'term_group'
+    | 'description'
+    | 'count';
   /** Whether to hide terms not assigned to any posts. */
   hide_empty?: boolean;
   /** Limit result set to terms assigned to a specific parent. */
@@ -3088,14 +3088,14 @@ export type GetTagsRequestArguments = {
   order?: 'asc' | 'desc';
   /** Sort collection by term attribute. */
   orderby?:
-  | 'id'
-  | 'include'
-  | 'name'
-  | 'slug'
-  | 'include_slugs'
-  | 'term_group'
-  | 'description'
-  | 'count';
+    | 'id'
+    | 'include'
+    | 'name'
+    | 'slug'
+    | 'include_slugs'
+    | 'term_group'
+    | 'description'
+    | 'count';
   /** Whether to hide terms not assigned to any posts. */
   hide_empty?: boolean;
   /** Limit result set to terms assigned to a specific post. */
@@ -3138,14 +3138,14 @@ export type GetNavMenusRequestArguments = {
   order?: 'asc' | 'desc';
   /** Sort collection by term attribute. */
   orderby?:
-  | 'id'
-  | 'include'
-  | 'name'
-  | 'slug'
-  | 'include_slugs'
-  | 'term_group'
-  | 'description'
-  | 'count';
+    | 'id'
+    | 'include'
+    | 'name'
+    | 'slug'
+    | 'include_slugs'
+    | 'term_group'
+    | 'description'
+    | 'count';
   /** Whether to hide terms not assigned to any posts. */
   hide_empty?: boolean;
   /** Limit result set to terms assigned to a specific post. */
@@ -3192,14 +3192,14 @@ export type GetUsersRequestArguments = {
   order?: 'asc' | 'desc';
   /** Sort collection by user attribute. */
   orderby?:
-  | 'id'
-  | 'include'
-  | 'name'
-  | 'registered_date'
-  | 'slug'
-  | 'include_slugs'
-  | 'email'
-  | 'url';
+    | 'id'
+    | 'include'
+    | 'name'
+    | 'registered_date'
+    | 'slug'
+    | 'include_slugs'
+    | 'email'
+    | 'url';
   /** Limit result set to users with one or more specific slugs. */
   slug?: string[];
   /** Limit result set to users matching at least one specific role provided.

@@ -139,7 +139,7 @@ const PostsFilter = (props: PostFilterProps) => {
       getTags();
     }
     getPosts({ ...defaultValues, url: targetWp.url });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // refresh category
@@ -152,11 +152,10 @@ const PostsFilter = (props: PostFilterProps) => {
     getTags();
   };
 
-  const {
-    control, handleSubmit, reset, register, getValues, setValue,
-  } = useForm<PostsFilterArguments>({
-    defaultValues: { ...defaultValues, url: targetWp.url },
-  });
+  const { control, handleSubmit, reset, register, getValues, setValue } =
+    useForm<PostsFilterArguments>({
+      defaultValues: { ...defaultValues, url: targetWp.url },
+    });
 
   // form submit with validateion
   const onSubmit = (data: PostsFilterArguments) => {
@@ -329,11 +328,7 @@ const PostsFilter = (props: PostFilterProps) => {
                         isFuture: (date) => isFuture(date) || 'Enter past date',
                       },
                     }}
-                    render={({
-                      field: {
-                        ref, onBlur, name, ...restField
-                      }, fieldState,
-                    }) => (
+                    render={({ field: { ref, onBlur, name, ...restField }, fieldState }) => (
                       <DatePicker
                         {...restField}
                         inputRef={ref}
@@ -360,14 +355,11 @@ const PostsFilter = (props: PostFilterProps) => {
                       validate: {
                         isValid: (date) => date == null || date?.isValid || 'Invalid date',
                         isFuture: (date) => isFuture(date) || 'Enter past date',
-                        invalidToDate: (date) => invalidToDate(date) || 'Enter future date than from',
+                        invalidToDate: (date) =>
+                          invalidToDate(date) || 'Enter future date than from',
                       },
                     }}
-                    render={({
-                      field: {
-                        ref, onBlur, name, ...restField
-                      }, fieldState,
-                    }) => (
+                    render={({ field: { ref, onBlur, name, ...restField }, fieldState }) => (
                       <DatePicker
                         {...restField}
                         inputRef={ref}

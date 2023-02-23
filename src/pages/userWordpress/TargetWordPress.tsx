@@ -21,17 +21,17 @@ export type StepperCloseProps = {
 };
 
 // eslint-disable-next-line react/display-name
-const Transition = React.forwardRef((
-  props: TransitionProps & {
-    children: React.ReactElement;
-  },
-  ref: React.Ref<unknown>,
-) => <Slide direction="up" ref={ref} {...props} />);
+const Transition = React.forwardRef(
+  (
+    props: TransitionProps & {
+      children: React.ReactElement;
+    },
+    ref: React.Ref<unknown>
+  ) => <Slide direction="up" ref={ref} {...props} />
+);
 
 const TargetWordPress: React.FC = () => {
-  const {
-    isLoading, isError, error, success, targetWp,
-  } = useAppSelector(selectTargetWp);
+  const { isLoading, isError, error, success, targetWp } = useAppSelector(selectTargetWp);
   const [openDialog, setOpenDialog] = useState(false);
   // redux dispatch
   const dispatch = useAppDispatch();
@@ -46,7 +46,7 @@ const TargetWordPress: React.FC = () => {
       Swal.close();
       updateWordPressList();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success]);
 
   // rendering loading
@@ -67,13 +67,10 @@ const TargetWordPress: React.FC = () => {
         confirmButtonText: 'OK',
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError]);
 
-  const wpPostStepperClosed = ({
-    openStepper,
-    finishState,
-  }:StepperCloseProps) => {
+  const wpPostStepperClosed = ({ openStepper, finishState }: StepperCloseProps) => {
     if (!openStepper) {
       setOpenDialog(false);
     }

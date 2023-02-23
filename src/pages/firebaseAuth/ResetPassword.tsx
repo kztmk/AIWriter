@@ -22,9 +22,7 @@ const defaultlValues: ResetPasswordInputs = {
 };
 
 const ResetPassword = () => {
-  const {
-    isLoading, isError, success, error,
-  } = useAppSelector(selectFirebaseAuth);
+  const { isLoading, isError, success, error } = useAppSelector(selectFirebaseAuth);
   const dispatch = useAppDispatch();
 
   const [openErrorDialog, setOpenErrorDialog] = useState(false);

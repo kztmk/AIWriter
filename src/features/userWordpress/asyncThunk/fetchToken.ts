@@ -10,11 +10,11 @@ const jwtAuthError: WpRestApiErrorResponse = {
 };
 
 const fetchToken = createAsyncThunk<
-UserWordPress,
-AddWordPressInputs,
-{
-  rejectValue: WpRestApiErrorResponse;
-}
+  UserWordPress,
+  AddWordPressInputs,
+  {
+    rejectValue: WpRestApiErrorResponse;
+  }
 >('targetWp/fetchToken', async (wpAuthInfo, thunkApi) => {
   try {
     const response = await fetch(`${wpAuthInfo.url}/wp-json/jwt-auth/v1/token`, {

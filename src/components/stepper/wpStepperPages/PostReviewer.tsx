@@ -14,9 +14,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useContext, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import type {
-  Category, Post, Tag, WpRestApiErrorResponse,
-} from '../../../types';
+import type { Category, Post, Tag, WpRestApiErrorResponse } from '../../../types';
 import { StepperProps, WpPostStepperInputData } from '../WpPostStepperInputData';
 
 interface PostWordPressFormParams {
@@ -40,7 +38,7 @@ interface AddPostRequestParams {
   tags: number[];
 }
 
-const PostReviewer = (props: StepperProps & { setPublishedUrl: (url:string) => void }) => {
+const PostReviewer = (props: StepperProps & { setPublishedUrl: (url: string) => void }) => {
   const { currentState, setCurrentState, targetWp } = useContext(WpPostStepperInputData);
   const { handleNext, handleBack, setPublishedUrl } = props;
 
@@ -49,9 +47,7 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: (url:string) => v
   const [resultMessage, setResultMessage] = useState('');
   const [postResult, setPostResult] = useState('');
 
-  const {
-    control, register, handleSubmit, reset,
-  } = useForm<PostWordPressFormParams>({
+  const { control, register, handleSubmit, reset } = useForm<PostWordPressFormParams>({
     defaultValues: defaultlValues,
   });
 
@@ -214,7 +210,10 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: (url:string) => v
       </Box>
       <Box
         sx={{
-          display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000000,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1000000,
         }}
       >
         <Backdrop

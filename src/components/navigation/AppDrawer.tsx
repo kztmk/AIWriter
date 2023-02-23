@@ -11,7 +11,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { CSSObject, styled, Theme } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import Link from '@mui/material/Link';
 
 import { useAppDispatch } from '../../app/hooks';
 import WordPressListImage from '../../assets/wordpress-w.svg';
@@ -68,7 +68,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
       ...closedMixin(theme),
       '& .MuiDrawer-paper': closedMixin(theme),
     }),
-  }),
+  })
 );
 
 const AppDrawer = (props: AppDrawerProps) => {
@@ -92,7 +92,7 @@ const AppDrawer = (props: AppDrawerProps) => {
       </DrawerHeader>
       <Divider />
       <List>
-        <Link to="/">
+        <Link href="/">
           <ListItem key="wordpress" disablePadding sx={{ display: 'block' }}>
             <ListItemButton
               sx={{
@@ -117,7 +117,7 @@ const AppDrawer = (props: AppDrawerProps) => {
       </List>
       <Divider />
       <List>
-        <Link to="/settings">
+        <Link href="/settings">
           <ListItem key="settings" disablePadding sx={{ display: 'block' }}>
             <ListItemButton
               sx={{

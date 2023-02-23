@@ -2,11 +2,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { WpName } from '../../../types';
 
 const fetchName = createAsyncThunk<
-string,
-string,
-{
-  rejectValue: string;
-}
+  string,
+  string,
+  {
+    rejectValue: string;
+  }
 >('targetWp/fetchName', async (url, thunkApi) => {
   try {
     const response = await fetch(`${url}/wp-json?_fields=name`, {

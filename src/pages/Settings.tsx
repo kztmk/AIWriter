@@ -21,9 +21,7 @@ const defaultValues: SettingsInputs = {
 
 const Settings = () => {
   const dispatch = useAppDispatch();
-  const {
-    isLoading, isError, settings, errorMessage,
-  } = useAppSelector(selectSettings);
+  const { isLoading, isError, settings, errorMessage } = useAppSelector(selectSettings);
 
   const {
     control,
@@ -40,7 +38,7 @@ const Settings = () => {
     if (settings) {
       setValue('chatGptApiKey', settings.chatGptApiKey);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSubmit: SubmitHandler<SettingsInputs> = (data) => {
@@ -78,9 +76,13 @@ const Settings = () => {
           )}
         />
       </Box>
-      <Box sx={{
-        display: 'flex', flexDirection: 'row', alignItems: 'center', mt: 4,
-      }}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          mt: 4,
+        }}
       >
         <Button type="submit" size="medium" variant="contained" color="primary">
           Save

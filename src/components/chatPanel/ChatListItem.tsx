@@ -88,7 +88,10 @@ const ChatListItem = (props: { chatLog: ChatGptLog; showPrompt: boolean }) => {
             <PsychologyIcon
               fontSize="large"
               sx={{
-                position: 'absolute', right: '-60px', top: 15, color: '#8bc34a',
+                position: 'absolute',
+                right: '-60px',
+                top: 15,
+                color: '#8bc34a',
               }}
             />
           </Badge>

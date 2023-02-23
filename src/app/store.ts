@@ -1,4 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import type { PreloadedState } from '@reduxjs/toolkit';
 import firebaseAuthReducer from '../features/firebaseAuth/authSlice';
 import wordPressListReducer from '../features/userWordpress/wordPressListSlice';
 import targetWpReducer from '../features/userWordpress/targetWpSlice';
@@ -14,10 +15,16 @@ const rootReducer = combineReducers({
 });
 export type RootState = ReturnType<typeof rootReducer>;
 
-const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
-});
+export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
+  return configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
+    preloadedState,
+  });
+};
 
-export type AppDispatch = typeof store.dispatch;
+const store = setupStore({});
+
+export type AppDispatch = AppStore['dispatch'];
+export type AppStore = ReturnType<typeof setupStore>;
 export default store;

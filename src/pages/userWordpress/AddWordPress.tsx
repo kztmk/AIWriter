@@ -45,9 +45,7 @@ const defaultValues: AddWordPressInputs = {
 const AddWordPress = () => {
   // dispatch
   const dispatch = useAppDispatch();
-  const {
-    isLoading, isError, error, success, targetWp,
-  } = useAppSelector(selectTargetWp);
+  const { isLoading, isError, error, success, targetWp } = useAppSelector(selectTargetWp);
   const { wordPressList } = useAppSelector(selectWordPressList);
 
   // error dialog
@@ -75,7 +73,7 @@ const AddWordPress = () => {
       dispatch(addWordPress(targetWp));
       navigate('/');
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success]);
 
   // for validate inputs using react-hook-form with zod
@@ -189,9 +187,13 @@ const AddWordPress = () => {
               />
             )}
           />
-          <Box sx={{
-            display: 'flex', flexDirection: 'row', alignItems: 'center', mt: 4,
-          }}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              mt: 4,
+            }}
           >
             <Button type="submit" size="medium" variant="contained" color="primary">
               Add to List

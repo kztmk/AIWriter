@@ -19,7 +19,11 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { initializeChatGpt, selectChatGpt, fetchChatGpt } from '../../features/chatGpt/chatGptSlice';
+import {
+  initializeChatGpt,
+  selectChatGpt,
+  fetchChatGpt,
+} from '../../features/chatGpt/chatGptSlice';
 import { selectSettings } from '../../features/settings/settingsSlice';
 import { ChatGptLog, ChatGptParams } from '../../types';
 
@@ -49,7 +53,7 @@ const defaultValues: ChatGptParamsWithApiKey = {
  * this props(function) send each chat to parent.
  */
 export type ChatBaseProps = {
-  addChatLogs: (chatlog:ChatGptLog) => void;
+  addChatLogs: (chatlog: ChatGptLog) => void;
 };
 
 /**
@@ -58,17 +62,14 @@ export type ChatBaseProps = {
 const ChatBase: React.FC<ChatBaseProps> = (props) => {
   // eslint-disable-next-line react/prop-types
   const { addChatLogs } = props;
-  const {
-    isLoading, isError, success, error, requestArgs, response,
-  } = useAppSelector(selectChatGpt);
+  const { isLoading, isError, success, error, requestArgs, response } =
+    useAppSelector(selectChatGpt);
   const dispatch = useAppDispatch();
 
   const { settings } = useAppSelector(selectSettings);
   const navigate = useNavigate();
 
-  const {
-    control, handleSubmit, reset, register, getValues,
-  } = useForm<ChatGptParamsWithApiKey>({
+  const { control, handleSubmit, reset, register, getValues } = useForm<ChatGptParamsWithApiKey>({
     defaultValues: { ...defaultValues, chatGptApiKey: settings?.chatGptApiKey },
   });
 
@@ -82,9 +83,11 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
   useEffect(() => {
     if (success === 'true') {
       // add to chatlog managed by parent
-      const promptTokens = Number.isNaN(response.usage?.promptTokens) ? 0
+      const promptTokens = Number.isNaN(response.usage?.promptTokens)
+        ? 0
         : response.usage?.promptTokens;
-      const completionTokens = Number.isNaN(response.usage?.completionTokens) ? 0
+      const completionTokens = Number.isNaN(response.usage?.completionTokens)
+        ? 0
         : response.usage?.completionTokens;
       const totalTokens = promptTokens + completionTokens;
       addChatLogs({
@@ -97,7 +100,7 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
       // reset form
       reset();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success]);
 
   useEffect(() => {
@@ -110,13 +113,15 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
       navigate('/settings');
     }
     dispatch(initializeChatGpt());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSubmit = async (data: ChatGptParamsWithApiKey) => {
     await dispatch(initializeChatGpt());
-    const selectedMaxTokens = typeof data.max_tokens === 'undefined' ? 4096 : (data.max_tokens as number);
-    const promptLength = typeof data.prompt === 'undefined' ? 40 : (data.prompt as string).length * 4;
+    const selectedMaxTokens =
+      typeof data.max_tokens === 'undefined' ? 4096 : (data.max_tokens as number);
+    const promptLength =
+      typeof data.prompt === 'undefined' ? 40 : (data.prompt as string).length * 4;
     const maxTokens = selectedMaxTokens - promptLength;
     await dispatch(fetchChatGpt({ ...data, max_tokens: maxTokens }));
   };

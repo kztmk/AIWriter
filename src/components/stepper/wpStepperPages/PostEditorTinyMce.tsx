@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 // import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -108,7 +109,8 @@ const PostEditorTinyMce = (props: StepperProps) => {
   // use convert chatLogs to tinyMCE content
   const baloonLeftPrefix = '<!-- baloon-left-prefix --><div class="baloon_left">';
   const baloonLeftSurfix = '</div><!-- baloon-left-surfix -->';
-  const baloonRightPrefix = '<!-- baloon-right-prefix --><div class="completion"><div class="baloon_right">';
+  const baloonRightPrefix =
+    '<!-- baloon-right-prefix --><div class="completion"><div class="baloon_right">';
   const baloonRightSurfix = '</div></div><!-- baloon-right-surfix -->';
 
   // Word Balloon left prefix
@@ -140,10 +142,16 @@ const PostEditorTinyMce = (props: StepperProps) => {
   // tinyMCE contents for first time
   let html = '';
   if (currentState.chatPanel.showPrompt) {
-    html = currentState.chatPanel.chatLogs.reduce((chats: string, chat) => `${chats}${baloonLeftPrefix}${chat.prompt}${baloonLeftSurfix}
-        ${baloonRightPrefix}${chat.completion}${baloonRightSurfix}`, '');
+    html = currentState.chatPanel.chatLogs.reduce(
+      (chats: string, chat) => `${chats}${baloonLeftPrefix}${chat.prompt}${baloonLeftSurfix}
+        ${baloonRightPrefix}${chat.completion}${baloonRightSurfix}`,
+      ''
+    );
   } else {
-    html = currentState.chatPanel.chatLogs.reduce((chats: string, chat) => `${chats}\n<p>${chat.completion}</p>`, '');
+    html = currentState.chatPanel.chatLogs.reduce(
+      (chats: string, chat) => `${chats}\n<p>${chat.completion}</p>`,
+      ''
+    );
   }
 
   // convert WordPress Word Balloon plugin shortcode
@@ -218,8 +226,11 @@ const PostEditorTinyMce = (props: StepperProps) => {
   //   </Dialog>
   // );
 
-  // eslint-disable-next-line max-len, consistent-return
-  const handleImageUpload = async (file: any, success: (url:string) => void, failure: (msg:string) => void): Promise<void> => {
+  const handleImageUpload = async (
+    file: any,
+    success: (url: string) => void,
+    failure: (msg: string) => void
+  ): Promise<void> => {
     const formData = new FormData();
     formData.append('file', file);
 
@@ -246,13 +257,14 @@ const PostEditorTinyMce = (props: StepperProps) => {
   };
 
   const handleFilePicker = (
-    callback: (url: string, meta: { title?: string, alt?: string }) => void,
+    callback: (url: string, meta: { title?: string; alt?: string }) => void,
     value: string,
     meta: {
-      filetype?: string,
-      title?: string,
-      width?: number, height: number
-    },
+      filetype?: string;
+      title?: string;
+      width?: number;
+      height: number;
+    }
   ) => {
     if (meta.filetype === 'image') {
       const input = document.getElementById('img-file') as HTMLInputElement;
@@ -275,7 +287,7 @@ const PostEditorTinyMce = (props: StepperProps) => {
           },
           (errorMsg: string) => {
             setErrorMessage(errorMsg);
-          },
+          }
         );
         setUploading(false);
       };
@@ -330,12 +342,12 @@ const PostEditorTinyMce = (props: StepperProps) => {
       </Box>
       <Box>
         <FormControlLabel
-          control={(
+          control={
             <Checkbox
               checked={convertShortCode}
               onChange={() => setConvertShortCode(!convertShortCode)}
             />
-          )}
+          }
           label="Convert html to Word Balloon shortcode(require Word Balloon Plugin)"
         />
       </Box>
