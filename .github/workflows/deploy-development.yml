@@ -7,14 +7,14 @@ name: Deploy to Firebase DevHosting on merge
     branches:
       - develop
 env:
-  VITE_API_KEY:'${{ var.DEV_VITE_API_KEY }}'
-  VITE_AUTH_DOMAIN:'${{ var.DEV_VITE_AUTH_DOMAIN }}'
-  VITE_DATABASE_URL:'${{ var.DEV_VITE_DATABASE_URL }}'
-  VITE_PROJECT_ID:'${{ var.DEV_VITE_PROJECT_ID }}'
-  VITE_STORAGE_BUCKET:'${{ var.DEV_VITE_STORAGE_BUCKET }}'
-  VITE_MESSAGING_SENDER_ID:'${{ var.DEV_VITE_MESSAGEING_SENDER_ID }}'
-  VITE_APP_ID:'${{ var.DEV_VITE_APP_ID }}'
-  VITE_MEASUREMENT_ID:'${{ var.DEV_VITE_MEASRUREMENT_ID }}'
+  VITE_API_KEY:'${{ vars.DEV_VITE_API_KEY }}'
+  VITE_AUTH_DOMAIN:'${{ vars.DEV_VITE_AUTH_DOMAIN }}'
+  VITE_DATABASE_URL:'${{ vars.DEV_VITE_DATABASE_URL }}'
+  VITE_PROJECT_ID:'${{ vars.DEV_VITE_PROJECT_ID }}'
+  VITE_STORAGE_BUCKET:'${{ vars.DEV_VITE_STORAGE_BUCKET }}'
+  VITE_MESSAGING_SENDER_ID:'${{ vars.DEV_VITE_MESSAGEING_SENDER_ID }}'
+  VITE_APP_ID:'${{ vars.DEV_VITE_APP_ID }}'
+  VITE_MEASUREMENT_ID:'${{ vars.DEV_VITE_MEASRUREMENT_ID }}'
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
