@@ -4,7 +4,6 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
@@ -18,6 +17,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTime } from 'luxon';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+
 import { useAppDispatch } from '../app/hooks';
 import az from '../assets/sort_asc.svg';
 import za from '../assets/sort_desc.svg';
@@ -90,6 +92,7 @@ export type PostsFilterArguments = {
   to: DateTime | null;
   orderby: 'date' | 'title' | 'author';
   order: boolean;
+  page: number;
 };
 
 const defaultValues: PostsFilterArguments = {
@@ -101,6 +104,7 @@ const defaultValues: PostsFilterArguments = {
   to: null,
   orderby: 'date',
   order: true,
+  page: 1,
 };
 
 export type PostFilterProps = {
@@ -147,9 +151,10 @@ const PostsFilter = (props: PostFilterProps) => {
     getTags();
   };
 
-  const { control, handleSubmit, reset, register, getValues } = useForm<PostsFilterArguments>({
-    defaultValues: { ...defaultValues, url: targetWp.url },
-  });
+  const { control, handleSubmit, reset, register, getValues, setValue } =
+    useForm<PostsFilterArguments>({
+      defaultValues: { ...defaultValues, url: targetWp.url },
+    });
 
   // form submit with validateion
   const onSubmit = (data: PostsFilterArguments) => {
@@ -176,6 +181,18 @@ const PostsFilter = (props: PostFilterProps) => {
       }
     }
     return true;
+  };
+
+  const fetchPrev = () => {
+    console.log('click prev 10');
+    if (getValues('page') > 1) setValue('page', getValues('page') - 1);
+    handleSubmit(onSubmit)();
+  };
+
+  const fetchNext = () => {
+    console.log('click next 10');
+    setValue('page', getValues('page') + 1);
+    handleSubmit(onSubmit)();
   };
 
   return (
@@ -361,16 +378,37 @@ const PostsFilter = (props: PostFilterProps) => {
                     )}
                   />
                 </Grid>
-                <Grid item xs={6} sm={3}>
+                <Grid item xs={12} sm={12}>
+                  <Button type="button" variant="outlined" onClick={() => reset()}>
+                    Reset
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outlined"
+                    color="success"
+                    onClick={fetchPrev}
+                    disabled={getValues('page') === 1}
+                    startIcon={<ArrowBackIosNewIcon />}
+                  >
+                    Prev 10
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outlined"
+                    color="success"
+                    onClick={fetchNext}
+                    sx={{ marginBottom: { xs: 2, sm: 2, md: 0 } }}
+                    endIcon={<NavigateNextIcon />}
+                  >
+                    Next 10
+                  </Button>
+
                   <Button
                     type="submit"
                     variant="contained"
-                    sx={{ marginRight: 2, marginBottom: { xs: 2, sm: 2, md: 0 } }}
+                    sx={{ marginBottom: { xs: 2, sm: 2, md: 0 } }}
                   >
                     Submit
-                  </Button>
-                  <Button type="button" variant="outlined" onClick={() => reset()}>
-                    Rest
                   </Button>
                 </Grid>
               </Grid>

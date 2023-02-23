@@ -13,6 +13,8 @@ import Login from './pages/firebaseAuth/Login';
 import ResetPassword from './pages/firebaseAuth/ResetPassword';
 import WordPressList from './pages/userWordpress/WordPressList';
 import AddWordPress from './pages/userWordpress/AddWordPress';
+import TargetWordPress from './pages/userWordpress/TargetWordPress';
+import Settings from './pages/Settings';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -36,6 +38,8 @@ const App = () => {
       <AppDrawer open={open} setOpen={setOpen} />
       <Box component="main" sx={{ mt: 8, flexGrow: 1, p: 3 }}>
         <Routes>
+          <Route path="/wordpress" element={<TargetWordPress />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/add_wordpress" element={<AddWordPress />} />
           <Route path="/password-reset" element={<ResetPassword />} />
           <Route path="/" element={user ? <WordPressList /> : <Navigate replace to="/login" />} />

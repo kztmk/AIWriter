@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import ErrorDialog from '../../components/ErrorDialog';
 import LoadingLayer from '../../components/LoadingLayer';
 import { selectFirebaseAuth, signIn } from '../../features/firebaseAuth/authSlice';
+import { fetchSettings } from '../../features/settings/settingsSlice';
 import { fetchWordPressList } from '../../features/userWordpress/wordPressListSlice';
 
 const schema = z.object({
@@ -56,16 +57,21 @@ const Login = () => {
     dispatch(signIn({ email: data.email, password: data.password }));
     if (data.rememberMe) {
       localStorage.setItem('loginInfo', JSON.stringify(data));
+    } else {
+      localStorage.removeItem('loginInfo');
     }
   };
 
   useEffect(() => {
     const loginInfo = localStorage.getItem('loginInfo');
+    console.log(`loginInfo: ${loginInfo}`);
     if (loginInfo) {
-      const { email, password } = JSON.parse(loginInfo);
-      setValue('email', email);
-      setValue('password', password);
-      setValue('rememberMe', true);
+      const { email, password, rememberMe } = JSON.parse(loginInfo);
+      if (rememberMe) {
+        setValue('email', email);
+        setValue('password', password);
+        setValue('rememberMe', true);
+      }
     }
   }, []);
 
@@ -78,6 +84,7 @@ const Login = () => {
   useEffect(() => {
     if (success === 'login') {
       dispatch(fetchWordPressList());
+      dispatch(fetchSettings());
       navigate('/');
     }
   });
@@ -164,7 +171,14 @@ const Login = () => {
                   <FormControlLabel
                     label="Save My info"
                     labelPlacement="end"
-                    control={<Checkbox {...field} id="rememberMe" sx={{ margin: 2 }} />}
+                    control={
+                      <Checkbox
+                        {...field}
+                        id="rememberMe"
+                        sx={{ margin: 2 }}
+                        checked={field.value}
+                      />
+                    }
                   />
                 )}
               />

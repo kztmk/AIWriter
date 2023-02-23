@@ -64,5 +64,9 @@ export const generateGetPostsEndpoint = (data: PostsFilterArguments): string => 
     queryParams['orderby'] = data.orderby;
   }
 
+  if (data.page > 1) {
+    queryParams['page'] = data.page.toString();
+  }
+
   return new URLSearchParams(queryParams).toString();
 };

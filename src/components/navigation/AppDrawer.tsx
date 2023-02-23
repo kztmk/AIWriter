@@ -1,4 +1,5 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
@@ -12,7 +13,9 @@ import ListItemText from '@mui/material/ListItemText';
 import { CSSObject, styled, Theme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 
+import { useAppDispatch } from '../../app/hooks';
 import WordPressListImage from '../../assets/wordpress-w.svg';
+import { signOut } from '../../features/firebaseAuth/authSlice';
 
 type AppDrawerProps = {
   open: boolean;
@@ -71,8 +74,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const AppDrawer = (props: AppDrawerProps) => {
   const { open, setOpen } = props;
 
+  const dispatch = useAppDispatch();
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleSignOut = () => {
+    dispatch(signOut());
   };
 
   return (
@@ -131,6 +139,27 @@ const AppDrawer = (props: AppDrawerProps) => {
             </ListItemButton>
           </ListItem>
         </Link>
+        <ListItem key={'sginout'} disablePadding sx={{ display: 'block' }}>
+          <ListItemButton
+            onClick={handleSignOut}
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2.5,
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+              }}
+            >
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Sign out'} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Drawer>
   );

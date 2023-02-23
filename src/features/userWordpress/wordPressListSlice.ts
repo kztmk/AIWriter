@@ -40,6 +40,9 @@ export const fetchWordPressList = createAsyncThunk<
         wpList.push({
           ...data[key],
           id: key,
+          posts: [],
+          tags: [],
+          categories: [],
         });
       });
     }

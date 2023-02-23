@@ -56,14 +56,26 @@ export const resetPassword = createAsyncThunk<
   }
 });
 
+export const signOut = createAsyncThunk<
+  void,
+  void,
+  {
+    rejectValue: AuthError;
+  }
+>('signOut', async (_, thunkApi) => {
+  const auth = getAuth();
+  try {
+    await auth.signOut();
+    return;
+  } catch (error: any) {
+    return thunkApi.rejectWithValue(error);
+  }
+});
+
 const firebaseAuthSlice = createSlice({
   name: 'firebaseAuth',
   initialState,
-  reducers: {
-    signOut: (state) => {
-      return initialState;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(signIn.pending, (state) => {
       state.isLoading = true;
@@ -96,11 +108,25 @@ const firebaseAuthSlice = createSlice({
       state.isError = true;
       state.error = action.payload;
     });
+    builder.addCase(signOut.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.success = 'idle';
+      state.error = undefined;
+    });
+    builder.addCase(signOut.fulfilled, (state) => {
+      return initialState;
+    });
+    builder.addCase(signOut.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = action.payload;
+    });
   },
 });
 
 export const selectFirebaseAuth = (state: RootState) => state.firebaseAuth;
 
-export const { signOut } = firebaseAuthSlice.actions;
+export const {} = firebaseAuthSlice.actions;
 
 export default firebaseAuthSlice.reducer;
