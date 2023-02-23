@@ -36,5 +36,6 @@ module.exports = {
         props: false,
       },
     ],
+    'react/jsx-props-no-spreading': 'off',
   },
 };

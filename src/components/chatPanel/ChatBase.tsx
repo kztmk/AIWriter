@@ -19,10 +19,9 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { initializeChatGpt, selectChatGpt } from '../../features/chatGpt/chatGptSlice';
-import { fetchChatGpt } from '../../features/chatGpt/fetchChatGpt';
+import { initializeChatGpt, selectChatGpt, fetchChatGpt } from '../../features/chatGpt/chatGptSlice';
 import { selectSettings } from '../../features/settings/settingsSlice';
-import { ChatGptParams } from '../../types';
+import { ChatGptLog, ChatGptParams } from '../../types';
 
 /** Chat GPT-3 Models */
 const models = [
@@ -50,22 +49,26 @@ const defaultValues: ChatGptParamsWithApiKey = {
  * this props(function) send each chat to parent.
  */
 export type ChatBaseProps = {
-  addChatLogs: Function;
+  addChatLogs: (chatlog:ChatGptLog) => void;
 };
 
 /**
  * Provide chat form.
  */
 const ChatBase: React.FC<ChatBaseProps> = (props) => {
+  // eslint-disable-next-line react/prop-types
   const { addChatLogs } = props;
-  const { isLoading, isError, success, error, requestArgs, response } =
-    useAppSelector(selectChatGpt);
+  const {
+    isLoading, isError, success, error, requestArgs, response,
+  } = useAppSelector(selectChatGpt);
   const dispatch = useAppDispatch();
 
   const { settings } = useAppSelector(selectSettings);
   const navigate = useNavigate();
 
-  const { control, handleSubmit, reset, register, getValues } = useForm<ChatGptParamsWithApiKey>({
+  const {
+    control, handleSubmit, reset, register, getValues,
+  } = useForm<ChatGptParamsWithApiKey>({
     defaultValues: { ...defaultValues, chatGptApiKey: settings?.chatGptApiKey },
   });
 
@@ -79,10 +82,14 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
   useEffect(() => {
     if (success === 'true') {
       // add to chatlog managed by parent
-      const totalTokens = response.usage?.promptTokens + response.usage?.completionTokens;
+      const promptTokens = Number.isNaN(response.usage?.promptTokens) ? 0
+        : response.usage?.promptTokens;
+      const completionTokens = Number.isNaN(response.usage?.completionTokens) ? 0
+        : response.usage?.completionTokens;
+      const totalTokens = promptTokens + completionTokens;
       addChatLogs({
         id: response.id,
-        prompt: getValues('prompt'),
+        prompt: getValues('prompt') as string,
         completion: response.choices[0]?.text,
         totalTokens,
       });
@@ -90,6 +97,7 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
       // reset form
       reset();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success]);
 
   useEffect(() => {
@@ -102,14 +110,13 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
       navigate('/settings');
     }
     dispatch(initializeChatGpt());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSubmit = async (data: ChatGptParamsWithApiKey) => {
     await dispatch(initializeChatGpt());
-    const selectedMaxTokens =
-      typeof data.max_tokens === 'undefined' ? 4096 : (data.max_tokens as number);
-    const promptLength =
-      typeof data.prompt === 'undefined' ? 40 : (data.prompt as string).length * 4;
+    const selectedMaxTokens = typeof data.max_tokens === 'undefined' ? 4096 : (data.max_tokens as number);
+    const promptLength = typeof data.prompt === 'undefined' ? 40 : (data.prompt as string).length * 4;
     const maxTokens = selectedMaxTokens - promptLength;
     await dispatch(fetchChatGpt({ ...data, max_tokens: maxTokens }));
   };
@@ -119,8 +126,17 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
     setErrorOpenDialog(false);
     reset();
   };
-  const ErrorDialog = () => {
-    return (
+
+  return (
+    <>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={isLoading}
+        >
+          <CircularProgress />
+        </Backdrop>
+      </Box>
       <Dialog
         open={openErrorDialog}
         onClose={handleCloseErrorDialog}
@@ -137,27 +153,13 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-    );
-  };
-
-  return (
-    <>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={isLoading}
-        >
-          <CircularProgress />
-        </Backdrop>
-      </Box>
-      <ErrorDialog />
       <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ marginTop: 3 }}>
         <Stack direction="row" sx={{ mb: 2 }}>
           <Box sx={{ flexGrow: 1 }}>
             <Controller
               control={control}
               name="model"
-              defaultValue={'text-davinci-003'}
+              defaultValue="text-davinci-003"
               render={({ field: { ref, onChange, ...field } }) => (
                 <Autocomplete
                   options={models}
@@ -187,7 +189,7 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
                   label="Temperature"
                   labelPlacement="top"
                   sx={{ width: '100%' }}
-                  control={<Slider defaultValue={100} onChange={onChange} {...field}></Slider>}
+                  control={<Slider defaultValue={100} onChange={onChange} {...field} />}
                 />
               )}
             />

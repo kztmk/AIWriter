@@ -1,7 +1,9 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  get, getDatabase, ref, set,
+} from 'firebase/database';
+
 import type { RootState } from '../../app/store';
-import { db } from '../../main';
-import { ref, set, get, push } from 'firebase/database';
 
 export type Settings = {
   chatGptApiKey: string;
@@ -26,15 +28,16 @@ const initialState = {
 };
 
 export const setSettings = createAsyncThunk<
-  Settings,
-  Settings,
-  {
-    rejectValue: string;
-    state: RootState;
-  }
+Settings,
+Settings,
+{
+  rejectValue: string;
+  state: RootState;
+}
 >('setSettings', async (args, thunkApi) => {
   try {
     const { user } = thunkApi.getState().firebaseAuth;
+    const db = getDatabase();
     const dbRef = ref(db, `user-data/${user?.uid}/settings`);
     await set(dbRef, { ...args });
 
@@ -45,15 +48,16 @@ export const setSettings = createAsyncThunk<
 });
 
 export const fetchSettings = createAsyncThunk<
-  Settings,
-  void,
-  {
-    rejectValue: string;
-    state: RootState;
-  }
+Settings,
+void,
+{
+  rejectValue: string;
+  state: RootState;
+}
 >('fetchSettings', async (_, thunkApi) => {
   try {
     const { user } = thunkApi.getState().firebaseAuth;
+    const db = getDatabase();
     const dbRef = ref(db, `user-data/${user?.uid}/settings`);
     const snapshot = await get(dbRef);
     const data = snapshot.val();
@@ -96,7 +100,5 @@ const settingsSlice = createSlice({
 });
 
 export const selectSettings = (state: RootState) => state.settings;
-
-export const {} = settingsSlice.actions;
 
 export default settingsSlice.reducer;

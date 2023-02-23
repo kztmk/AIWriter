@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type { RootState } from '../../app/store';
 import {
   User as FirebaseUser,
   AuthError,
@@ -7,13 +6,14 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
 } from 'firebase/auth';
+import type { RootState } from '../../app/store';
 
 export type FirebaseAuthState = {
   user: FirebaseUser | null;
   isLoading: boolean;
   success: 'idle' | 'login' | 'resetPassword' | 'logout';
   isError: boolean;
-  error?: AuthError;
+  error?: string;
 };
 
 const initialState: FirebaseAuthState = {
@@ -25,49 +25,51 @@ const initialState: FirebaseAuthState = {
 };
 
 export const signIn = createAsyncThunk<
-  FirebaseUser,
-  { email: string; password: string },
-  {
-    rejectValue: AuthError;
-  }
+FirebaseUser,
+{ email: string; password: string },
+{
+  rejectValue: string;
+}
 >('signIn', async (args, thunkApi) => {
   try {
     const auth = getAuth();
     const userCredential = await signInWithEmailAndPassword(auth, args.email, args.password);
     return userCredential.user;
   } catch (error: any) {
-    return thunkApi.rejectWithValue(error);
+    return thunkApi.rejectWithValue(error.message);
   }
 });
 
 export const resetPassword = createAsyncThunk<
-  void,
-  { email: string },
-  {
-    rejectValue: AuthError;
-  }
+void,
+{ email: string },
+{
+  rejectValue: string;
+}
 >('resetPassword', async (args, thunkApi) => {
   const auth = getAuth();
   try {
     await sendPasswordResetEmail(auth, args.email);
     return;
   } catch (error: any) {
-    return thunkApi.rejectWithValue(error);
+    // eslint-disable-next-line consistent-return
+    return thunkApi.rejectWithValue(error.message);
   }
 });
 
 export const signOut = createAsyncThunk<
-  void,
-  void,
-  {
-    rejectValue: AuthError;
-  }
+void,
+void,
+{
+  rejectValue: string;
+}
 >('signOut', async (_, thunkApi) => {
   const auth = getAuth();
   try {
     await auth.signOut();
     return;
   } catch (error: any) {
+    // eslint-disable-next-line consistent-return
     return thunkApi.rejectWithValue(error);
   }
 });
@@ -114,9 +116,7 @@ const firebaseAuthSlice = createSlice({
       state.success = 'idle';
       state.error = undefined;
     });
-    builder.addCase(signOut.fulfilled, (state) => {
-      return initialState;
-    });
+    builder.addCase(signOut.fulfilled, (state) => initialState);
     builder.addCase(signOut.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
@@ -126,7 +126,5 @@ const firebaseAuthSlice = createSlice({
 });
 
 export const selectFirebaseAuth = (state: RootState) => state.firebaseAuth;
-
-export const {} = firebaseAuthSlice.actions;
 
 export default firebaseAuthSlice.reducer;

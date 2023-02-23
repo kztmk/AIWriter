@@ -1,20 +1,16 @@
+import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import React, { useState, useEffect, useContext } from 'react';
+import { useContext, useState } from 'react';
+import Swal from 'sweetalert2';
+
+import type { ChatGptLog } from '../../types';
+import type { StepperProps } from '../stepper/WpPostStepperInputData';
+import { WpPostStepperInputData } from '../stepper/WpPostStepperInputData';
 import ChatBase from './ChatBase';
 import ChatListItem from './ChatListItem';
-import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
-import Swal from 'sweetalert2';
-import { WpPostStepperInputData, StepperProps } from '../stepper/WpPostStepper';
-
-export type ChatGptLog = {
-  id: string;
-  prompt: string;
-  completion: string;
-  totalTokens: number;
-};
 
 /**
  * Provide Chatpanel
@@ -111,9 +107,8 @@ const ChatPanel = (props: Partial<StepperProps>) => {
         >
           {
             /* Chat screen */
-            chatLogs.map((chatlog) => {
-              return <ChatListItem key={chatlog.id} chatLog={chatlog} showPrompt={showPrompt} />;
-            })
+            // eslint-disable-next-line max-len
+            chatLogs.map((chatlog) => <ChatListItem key={chatlog.id} chatLog={chatlog} showPrompt={showPrompt} />)
           }
         </Box>
         <ChatBase addChatLogs={addChatLogs} />

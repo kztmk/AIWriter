@@ -21,7 +21,9 @@ const defaultValues: SettingsInputs = {
 
 const Settings = () => {
   const dispatch = useAppDispatch();
-  const { isLoading, isError, settings, errorMessage } = useAppSelector(selectSettings);
+  const {
+    isLoading, isError, settings, errorMessage,
+  } = useAppSelector(selectSettings);
 
   const {
     control,
@@ -38,6 +40,7 @@ const Settings = () => {
     if (settings) {
       setValue('chatGptApiKey', settings.chatGptApiKey);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSubmit: SubmitHandler<SettingsInputs> = (data) => {
@@ -57,41 +60,42 @@ const Settings = () => {
   };
 
   return (
-    <>
-      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-        <Box>
-          <Controller
-            name="chatGptApiKey"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                fullWidth
-                id="chatGptApiKey"
-                label="ChatGPT APIKey"
-                error={!!errors.chatGptApiKey}
-                helperText={errors.chatGptApiKey?.message}
-                sx={{ mt: 4 }}
-              />
-            )}
-          />
-        </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', mt: 4 }}>
-          <Button type="submit" size="medium" variant="contained" color="primary">
-            Save
-          </Button>
-          <Button
-            size="medium"
-            variant="contained"
-            color="inherit"
-            sx={{ ml: 2 }}
-            onClick={() => reset()}
-          >
-            Reset
-          </Button>
-        </Box>
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Box>
+        <Controller
+          name="chatGptApiKey"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              fullWidth
+              id="chatGptApiKey"
+              label="ChatGPT APIKey"
+              error={!!errors.chatGptApiKey}
+              helperText={errors.chatGptApiKey?.message}
+              sx={{ mt: 4 }}
+            />
+          )}
+        />
       </Box>
-    </>
+      <Box sx={{
+        display: 'flex', flexDirection: 'row', alignItems: 'center', mt: 4,
+      }}
+      >
+        <Button type="submit" size="medium" variant="contained" color="primary">
+          Save
+        </Button>
+        <Button
+          size="medium"
+          variant="contained"
+          color="inherit"
+          sx={{ ml: 2 }}
+          onClick={() => reset()}
+        >
+          Reset
+        </Button>
+      </Box>
+    </Box>
   );
 };
 

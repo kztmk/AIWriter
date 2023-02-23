@@ -15,55 +15,23 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/system/Container';
+import Container from '@mui/material/Container';
 import { DateTime } from 'luxon';
-import React, { Dispatch, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { fetchToken } from '../../features/userWordpress/asyncThunk/fetchToken';
-import { initialWp, selectTargetWp } from '../../features/userWordpress/targetWpSlice';
-import { UserWordPress } from '../../types';
-import ChatPanel, { ChatGptLog } from '../chatPanel/ChatPanel';
+import fetchToken from '../../features/userWordpress/asyncThunk/fetchToken';
+import { selectTargetWp } from '../../features/userWordpress/targetWpSlice';
+import type { StepperCloseProps } from '../../pages/userWordpress/TargetWordPress';
+import ChatPanel from '../chatPanel/ChatPanel';
 import PostEditor from './wpStepperPages/PostEditorTinyMce';
 import PostReviewer from './wpStepperPages/PostReviewer';
+import { initialStepData, WpPostStepperInputData } from './WpPostStepperInputData';
 
 const steps = ['Generate Post', 'Edit Post', 'Set Title, category, tags'];
 
-type StepperData = {
-  chatPanel: { chatLogs: ChatGptLog[]; showPrompt: boolean };
-  editedHtml: string;
-  htmlForPost: string;
-};
-
-const initialStepData: StepperData = {
-  chatPanel: { chatLogs: [], showPrompt: true },
-  editedHtml: '',
-  htmlForPost: '',
-};
-
-export const WpPostStepperInputData = React.createContext<{
-  currentState: StepperData;
-  setCurrentState: Dispatch<StepperData>;
-  targetWp: UserWordPress;
-}>({
-  currentState: initialStepData,
-  setCurrentState: () => {},
-  targetWp: initialWp,
-});
-
-export type StepperProps = {
-  activeStep: number;
-  handleNext: Function;
-  handleBack: Function;
-};
-
-const manatee = () => {
-  alert('manaTee');
-};
-
 type PosterProps = {
-  targetWp: UserWordPress;
-  closeMe: Function;
+  closeMe: ({ openStepper, finishState }: StepperCloseProps) => void;
 };
 
 /**
@@ -80,8 +48,11 @@ const WpPostStepper = (props: PosterProps) => {
   const [publishedUrl, setPublishedUrl] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
   const { closeMe } = props;
-  const { isLoading, isError, error, success, targetWp } = useAppSelector(selectTargetWp);
+  const {
+    isLoading, isError, error, success, targetWp,
+  } = useAppSelector(selectTargetWp);
   const dispatch = useAppDispatch();
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
     currentState,
     setCurrentState,
@@ -124,49 +95,11 @@ const WpPostStepper = (props: PosterProps) => {
       // refresh token
       dispatch(fetchToken(targetWp));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const Loading = () => {
-    return (
-      <Box
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000000 }}
-      >
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={isLoading}
-        >
-          <CircularProgress sx={{ zIndex: 100000000 }} />
-        </Backdrop>
-      </Box>
-    );
-  };
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-  };
-
-  const ErrorDialog = () => {
-    return (
-      <Dialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        sx={{ zIndex: 100000 }}
-      >
-        <DialogTitle id="alert-dialog-title">Error!</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Error occurred when token renewal.\n{error?.message}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} autoFocus>
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
   };
 
   useEffect(() => {
@@ -177,8 +110,11 @@ const WpPostStepper = (props: PosterProps) => {
 
   return (
     <Container component="main" sx={{ mb: 4 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 1, marginX: 2 }}>
-        <IconButton onClick={() => closeMe({ openStepper: false, finishState: 'suspention' })}>
+      <Box sx={{
+        display: 'flex', justifyContent: 'flex-end', marginTop: 1, marginX: 2,
+      }}
+      >
+        <IconButton onClick={() => closeMe({ openStepper: false, finishState: 'suspension' })}>
           <CloseIcon />
         </IconButton>
       </Box>
@@ -211,15 +147,43 @@ const WpPostStepper = (props: PosterProps) => {
             </Button>
           </>
         ) : (
-          <>
-            <WpPostStepperInputData.Provider value={value}>
-              {getStepContent(activeStep)}
-            </WpPostStepperInputData.Provider>
-          </>
+          <WpPostStepperInputData.Provider value={value}>
+            {getStepContent(activeStep)}
+          </WpPostStepperInputData.Provider>
         )}
       </Paper>
-      <Loading />
-      <ErrorDialog />
+      <Box
+        sx={{
+          display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000000,
+        }}
+      >
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={isLoading}
+        >
+          <CircularProgress sx={{ zIndex: 100000000 }} />
+        </Backdrop>
+      </Box>
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        sx={{ zIndex: 100000 }}
+      >
+        <DialogTitle id="alert-dialog-title">Error!</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Error occurred when token renewal.\n
+            {error?.message}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };

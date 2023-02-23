@@ -1,12 +1,11 @@
 /* Manage user's WordPress List */
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { getDatabase, push, ref, set, get } from 'firebase/database';
+import {
+  getDatabase, push, ref, set, get,
+} from 'firebase/database';
 import type { RootState } from '../../app/store';
 import { UserWordPress } from '../../types';
 import { FirebaseAuthState } from '../firebaseAuth/authSlice';
-import { initialWp } from './targetWpSlice';
-import { db } from '../../main';
-import { setTargetWp } from './targetWpSlice';
 
 export type UserWordPressList = {
   wordPressList: UserWordPress[];
@@ -22,15 +21,16 @@ const wpSort = (a: UserWordPress, b: UserWordPress) => {
 };
 
 export const fetchWordPressList = createAsyncThunk<
-  UserWordPress[],
-  void,
-  {
-    rejectValue: string;
-    state: RootState;
-  }
+UserWordPress[],
+void,
+{
+  rejectValue: string;
+  state: RootState;
+}
 >('fetchWordPressList', async (_, thunkApi) => {
   try {
     const { user } = thunkApi.getState().firebaseAuth as FirebaseAuthState;
+    const db = getDatabase();
     const dbRef = ref(db, `user-data/${user?.uid}/wordPressList`);
     const snapshot = await get(dbRef);
     const data = snapshot.val();
@@ -53,26 +53,30 @@ export const fetchWordPressList = createAsyncThunk<
 });
 
 export const addWordPress = createAsyncThunk<
-  UserWordPress,
-  UserWordPress,
-  {
-    rejectValue: string;
-    state: RootState;
-  }
+UserWordPress,
+UserWordPress,
+{
+  rejectValue: string;
+  state: RootState;
+}
 >('addWordPress', async (args, thunkApi) => {
   try {
-    const { categories, tags, posts, ...rest } = args;
+    const {
+      categories, tags, posts, ...rest
+    } = args;
     const { user } = thunkApi.getState().firebaseAuth;
+    const db = getDatabase();
     const dbRef = ref(db, `user-data/${user?.uid}/wordPressList`);
     const newWpRef = await push(dbRef);
     await set(newWpRef, { ...rest, id: newWpRef.key });
 
     const savedWp: UserWordPress = {
-      ...initialWp,
+      categories: [],
+      tags: [],
+      posts: [],
       ...rest,
       id: newWpRef.key ?? '',
     };
-    thunkApi.dispatch(setTargetWp(savedWp));
     return savedWp;
   } catch (error: any) {
     return thunkApi.rejectWithValue(error.message);
@@ -80,12 +84,12 @@ export const addWordPress = createAsyncThunk<
 });
 
 export const deleteWordPress = createAsyncThunk<
-  string,
-  string,
-  {
-    rejectValue: string;
-    state: RootState;
-  }
+string,
+string,
+{
+  rejectValue: string;
+  state: RootState;
+}
 >('deleteWordPress', async (args, thunkApi) => {
   try {
     const db = getDatabase();
@@ -127,6 +131,5 @@ const wordPressListSlice = createSlice({
 });
 
 export const selectWordPressList = (state: RootState) => state.wordPressList;
-export const {} = wordPressListSlice.actions;
 
 export default wordPressListSlice.reducer;

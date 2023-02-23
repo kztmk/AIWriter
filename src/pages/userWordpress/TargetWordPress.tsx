@@ -13,19 +13,25 @@ import PostsFilter, { PostsFilterArguments } from '../../components/PostsFilter'
 import WpPostStepper from '../../components/stepper/WpPostStepper';
 import { selectTargetWp } from '../../features/userWordpress/targetWpSlice';
 import { addWordPress } from '../../features/userWordpress/wordPressListSlice';
-import { fetchPosts } from '../../features/userWordpress/asyncThunk/fetchPosts';
+import fetchPosts from '../../features/userWordpress/asyncThunk/fetchPosts';
 
-const Transition = React.forwardRef(function Transition(
+export type StepperCloseProps = {
+  openStepper: boolean;
+  finishState: 'success' | 'error' | 'suspension';
+};
+
+// eslint-disable-next-line react/display-name
+const Transition = React.forwardRef((
   props: TransitionProps & {
     children: React.ReactElement;
   },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+  ref: React.Ref<unknown>,
+) => <Slide direction="up" ref={ref} {...props} />);
 
 const TargetWordPress: React.FC = () => {
-  const { isLoading, isError, error, success, targetWp } = useAppSelector(selectTargetWp);
+  const {
+    isLoading, isError, error, success, targetWp,
+  } = useAppSelector(selectTargetWp);
   const [openDialog, setOpenDialog] = useState(false);
   // redux dispatch
   const dispatch = useAppDispatch();
@@ -40,6 +46,7 @@ const TargetWordPress: React.FC = () => {
       Swal.close();
       updateWordPressList();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success]);
 
   // rendering loading
@@ -60,15 +67,13 @@ const TargetWordPress: React.FC = () => {
         confirmButtonText: 'OK',
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError]);
 
   const wpPostStepperClosed = ({
     openStepper,
     finishState,
-  }: {
-    openStepper: boolean;
-    finishState: 'success' | 'error' | 'suspension';
-  }) => {
+  }:StepperCloseProps) => {
     if (!openStepper) {
       setOpenDialog(false);
     }
@@ -112,9 +117,9 @@ const TargetWordPress: React.FC = () => {
         <PostsFilter targetWp={targetWp} />
         <PostsLine targetWp={targetWp} />
       </Box>
-      <Dialog fullWidth maxWidth={'xl'} open={openDialog} TransitionComponent={Transition}>
+      <Dialog fullWidth maxWidth="xl" open={openDialog} TransitionComponent={Transition}>
         <Box>
-          <WpPostStepper targetWp={targetWp} closeMe={wpPostStepperClosed} />
+          <WpPostStepper closeMe={wpPostStepperClosed} />
         </Box>
       </Dialog>
     </>

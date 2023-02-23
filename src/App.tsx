@@ -22,13 +22,14 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const unsubscribe = getAuth().onAuthStateChanged((user: FirebaseUser | null) => {
-      if (!user) {
+    const unsubscribe = getAuth().onAuthStateChanged((firebaseUser: FirebaseUser | null) => {
+      if (!firebaseUser) {
         dispatch(signOut());
       }
     });
 
     return unsubscribe;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { ChatGptLog } from './ChatPanel';
+import type { ChatGptLog } from '../../types';
 
 /**
  * Shows each chat
@@ -87,7 +87,9 @@ const ChatListItem = (props: { chatLog: ChatGptLog; showPrompt: boolean }) => {
           >
             <PsychologyIcon
               fontSize="large"
-              sx={{ position: 'absolute', right: '-60px', top: 15, color: '#8bc34a' }}
+              sx={{
+                position: 'absolute', right: '-60px', top: 15, color: '#8bc34a',
+              }}
             />
           </Badge>
           <Typography>{chatLog.completion}</Typography>

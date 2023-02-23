@@ -10,7 +10,7 @@ import { drawerWidth } from './AppDrawer';
 
 type MenuBarProps = {
   open: boolean;
-  openDrawer: Function;
+  openDrawer: (open: boolean) => void;
 };
 
 interface AppBarProps extends MuiAppBarProps {

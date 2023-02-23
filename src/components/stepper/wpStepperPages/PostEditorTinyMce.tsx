@@ -1,19 +1,23 @@
-import Backdrop from '@mui/material/Backdrop';
+// import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import CircularProgress from '@mui/material/CircularProgress';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+// import CircularProgress from '@mui/material/CircularProgress';
+// import Dialog from '@mui/material/Dialog';
+// import DialogActions from '@mui/material/DialogActions';
+// import DialogContent from '@mui/material/DialogContent';
+// import DialogContentText from '@mui/material/DialogContentText';
+// import DialogTitle from '@mui/material/DialogTitle';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Editor } from '@tinymce/tinymce-react';
 import { useContext, useRef, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Editor as TinyMCEEditor } from 'tinymce';
 
-import { WpPostStepperInputData, StepperProps } from '../WpPostStepper';
+import { StepperProps, WpPostStepperInputData } from '../WpPostStepperInputData';
+
+// eslint-disable-next-line max-len
+// type UploadHandler = (blobInfo: tinymce.BlobInfo, success: (filename: string) => void, failure: () => void) => void;
 
 const tinyMceContentStyle = `
 body {
@@ -102,10 +106,10 @@ const PostEditorTinyMce = (props: StepperProps) => {
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
 
   // use convert chatLogs to tinyMCE content
-  const baloonLeftPrefix = `<!-- baloon-left-prefix --><div class="baloon_left">`;
-  const baloonLeftSurfix = `</div><!-- baloon-left-surfix -->`;
-  const baloonRightPrefix = `<!-- baloon-right-prefix --><div class="completion"><div class="baloon_right">`;
-  const baloonRightSurfix = `</div></div><!-- baloon-right-surfix -->`;
+  const baloonLeftPrefix = '<!-- baloon-left-prefix --><div class="baloon_left">';
+  const baloonLeftSurfix = '</div><!-- baloon-left-surfix -->';
+  const baloonRightPrefix = '<!-- baloon-right-prefix --><div class="completion"><div class="baloon_right">';
+  const baloonRightSurfix = '</div></div><!-- baloon-right-surfix -->';
 
   // Word Balloon left prefix
   const balloonLeftPrefix = `
@@ -136,14 +140,10 @@ const PostEditorTinyMce = (props: StepperProps) => {
   // tinyMCE contents for first time
   let html = '';
   if (currentState.chatPanel.showPrompt) {
-    html = currentState.chatPanel.chatLogs.reduce((chats: string, chat) => {
-      return `${chats}${baloonLeftPrefix}${chat.prompt}${baloonLeftSurfix}
-        ${baloonRightPrefix}${chat.completion}${baloonRightSurfix}`;
-    }, '');
+    html = currentState.chatPanel.chatLogs.reduce((chats: string, chat) => `${chats}${baloonLeftPrefix}${chat.prompt}${baloonLeftSurfix}
+        ${baloonRightPrefix}${chat.completion}${baloonRightSurfix}`, '');
   } else {
-    html = currentState.chatPanel.chatLogs.reduce((chats: string, chat) => {
-      return `${chats}\n<p>${chat.completion}</p>`;
-    }, '');
+    html = currentState.chatPanel.chatLogs.reduce((chats: string, chat) => `${chats}\n<p>${chat.completion}</p>`, '');
   }
 
   // convert WordPress Word Balloon plugin shortcode
@@ -163,7 +163,6 @@ const PostEditorTinyMce = (props: StepperProps) => {
     replacedHtml = replacedHtml.replace(regxBrs, balloonRightSurfix);
     // replace spaces between tags
     replacedHtml = replacedHtml.replace(/\s{2,}/g, '');
-    console.log(`replacedHTML:${replacedHtml}`);
     return replacedHtml;
   };
 
@@ -180,48 +179,47 @@ const PostEditorTinyMce = (props: StepperProps) => {
     }
   };
 
-  const ImageUploadingDialog = () => {
-    return (
-      <Box
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000000 }}
-      >
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={uploading}
-        >
-          <CircularProgress sx={{ zIndex: 100000000 }} />
-        </Backdrop>
-      </Box>
-    );
-  };
+  // const ImageUploadingDialog = () => (
+  //   <Box
+  //     sx={{
+  //       display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000000,
+  //     }}
+  //   >
+  //     <Backdrop
+  //       sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+  //       open={uploading}
+  //     >
+  //       <CircularProgress sx={{ zIndex: 100000000 }} />
+  //     </Backdrop>
+  //   </Box>
+  // );
 
-  const handleCloseErrorDialog = () => {
-    setOpenErrorDialog(false);
-  };
+  // const handleCloseErrorDialog = () => {
+  //   setOpenErrorDialog(false);
+  // };
 
-  const ErrorDialog = () => {
-    return (
-      <Dialog
-        open={openErrorDialog}
-        onClose={handleCloseErrorDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        sx={{ zIndex: 999999 }}
-      >
-        <DialogTitle id="alert-dialog-title">Error!</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">{errorMessage}</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseErrorDialog} autoFocus>
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-  };
+  // const ErrorDialog = () => (
+  //   <Dialog
+  //     open={openErrorDialog}
+  //     onClose={handleCloseErrorDialog}
+  //     aria-labelledby="alert-dialog-title"
+  //     aria-describedby="alert-dialog-description"
+  //     sx={{ zIndex: 999999 }}
+  //   >
+  //     <DialogTitle id="alert-dialog-title">Error!</DialogTitle>
+  //     <DialogContent>
+  //       <DialogContentText id="alert-dialog-description">{errorMessage}</DialogContentText>
+  //     </DialogContent>
+  //     <DialogActions>
+  //       <Button onClick={handleCloseErrorDialog} autoFocus>
+  //         OK
+  //       </Button>
+  //     </DialogActions>
+  //   </Dialog>
+  // );
 
-  const handleImageUpload = async (file: any, success: Function, failure: Function) => {
+  // eslint-disable-next-line max-len, consistent-return
+  const handleImageUpload = async (file: any, success: (url:string) => void, failure: (msg:string) => void): Promise<void> => {
     const formData = new FormData();
     formData.append('file', file);
 
@@ -247,13 +245,21 @@ const PostEditorTinyMce = (props: StepperProps) => {
     }
   };
 
-  const handleFilePicker = (callback: Function, value: any, meta: any) => {
+  const handleFilePicker = (
+    callback: (url: string, meta: { title?: string, alt?: string }) => void,
+    value: string,
+    meta: {
+      filetype?: string,
+      title?: string,
+      width?: number, height: number
+    },
+  ) => {
     if (meta.filetype === 'image') {
-      let input = document.getElementById('img-file') as HTMLInputElement;
+      const input = document.getElementById('img-file') as HTMLInputElement;
       if (!input) return;
       input.click();
       input.onchange = function () {
-        let file = (input as any)?.files[0];
+        const file = (input as any)?.files[0];
 
         // check file size
         if (file.size > 2000000) {
@@ -264,12 +270,12 @@ const PostEditorTinyMce = (props: StepperProps) => {
         setUploading(true);
         handleImageUpload(
           file,
-          function (imageUrl: string) {
+          (imageUrl: string) => {
             callback(imageUrl, { alt: file.name });
           },
-          function (errorMessage: string) {
-            setErrorMessage(errorMessage);
-          }
+          (errorMsg: string) => {
+            setErrorMessage(errorMsg);
+          },
         );
         setUploading(false);
       };
@@ -282,6 +288,7 @@ const PostEditorTinyMce = (props: StepperProps) => {
         <input id="img-file" type="file" name="img-file" style={{ display: 'none' }} />
         <Editor
           apiKey="3cayhsc52gtz702zsmystt6wlvaiu9t316u2ynyfg7j24lir"
+          // eslint-disable-next-line no-return-assign
           onInit={(evt, editor) => (editorRef.current = editor)}
           initialValue={
             currentState.editedHtml.length === 0 ? `${html}<p></p>` : currentState.editedHtml
@@ -315,7 +322,6 @@ const PostEditorTinyMce = (props: StepperProps) => {
             file_browser_callback_types: 'image',
             image_advtab: true,
             images_upload_url: 'tekitou',
-            // @ts-ignore
             images_upload_handler: handleImageUpload,
             file_picker_callback: handleFilePicker,
             content_style: tinyMceContentStyle,
@@ -324,12 +330,12 @@ const PostEditorTinyMce = (props: StepperProps) => {
       </Box>
       <Box>
         <FormControlLabel
-          control={
+          control={(
             <Checkbox
               checked={convertShortCode}
               onChange={() => setConvertShortCode(!convertShortCode)}
             />
-          }
+          )}
           label="Convert html to Word Balloon shortcode(require Word Balloon Plugin)"
         />
       </Box>
@@ -341,8 +347,6 @@ const PostEditorTinyMce = (props: StepperProps) => {
           Next
         </Button>
       </Box>
-      <ImageUploadingDialog />
-      <ErrorDialog />
     </>
   );
 };

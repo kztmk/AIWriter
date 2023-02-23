@@ -7,17 +7,17 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Fab from '@mui/material/Fab';
 import IconButton from '@mui/material/IconButton';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
+import Tooltip from '@mui/material/Tooltip';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { initializeWp, setTargetWp } from '../../features/userWordpress/targetWpSlice';
 import {
   deleteWordPress,
   selectWordPressList,
 } from '../../features/userWordpress/wordPressListSlice';
-import Tooltip from '@mui/material/Tooltip';
 
 const WordPressList = () => {
   const { wordPressList } = useAppSelector(selectWordPressList);
@@ -128,7 +128,10 @@ const WordPressList = () => {
 
   return (
     <>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', spacing: 2 }}>
+      <Box sx={{
+        display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', spacing: 2,
+      }}
+      >
         <Tooltip title="Add WordPress">
           <Fab color="primary" onClick={addWordPress}>
             <AddIcon />

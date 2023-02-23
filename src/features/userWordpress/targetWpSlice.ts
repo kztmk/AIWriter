@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../app/store';
 import { WpRestApiErrorResponse, WordPressFetchParams, UserWordPress } from '../../types';
-import { fetchCategories } from './asyncThunk/fetchCategories';
-import { fetchName } from './asyncThunk/fetchName';
-import { fetchPosts } from './asyncThunk/fetchPosts';
-import { fetchTags } from './asyncThunk/fetchTags';
-import { fetchToken } from './asyncThunk/fetchToken';
+import fetchCategories from './asyncThunk/fetchCategories';
+import fetchName from './asyncThunk/fetchName';
+import fetchPosts from './asyncThunk/fetchPosts';
+import fetchTags from './asyncThunk/fetchTags';
+import fetchToken from './asyncThunk/fetchToken';
 
 export const initialWp: UserWordPress = {
   id: '',
@@ -59,9 +59,7 @@ const targetWpSlice = createSlice({
       state.error = undefined;
       state.success = 'idle';
     },
-    initializeWp: (state) => {
-      return initialState;
-    },
+    initializeWp: (state) => initialState,
   },
   extraReducers: (builder) => {
     // fetch token action

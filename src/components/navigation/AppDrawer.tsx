@@ -19,7 +19,7 @@ import { signOut } from '../../features/firebaseAuth/authSlice';
 
 type AppDrawerProps = {
   open: boolean;
-  setOpen: Function;
+  setOpen: (open: boolean) => void;
 };
 
 export const drawerWidth = 240;
@@ -68,7 +68,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
       ...closedMixin(theme),
       '& .MuiDrawer-paper': closedMixin(theme),
     }),
-  })
+  }),
 );
 
 const AppDrawer = (props: AppDrawerProps) => {
@@ -93,7 +93,7 @@ const AppDrawer = (props: AppDrawerProps) => {
       <Divider />
       <List>
         <Link to="/">
-          <ListItem key={'wordpress'} disablePadding sx={{ display: 'block' }}>
+          <ListItem key="wordpress" disablePadding sx={{ display: 'block' }}>
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -110,7 +110,7 @@ const AppDrawer = (props: AppDrawerProps) => {
                   justifyContent: 'center',
                 }}
               />
-              <ListItemText primary={'wordpress'} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary="wordpress" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </Link>
@@ -118,7 +118,7 @@ const AppDrawer = (props: AppDrawerProps) => {
       <Divider />
       <List>
         <Link to="/settings">
-          <ListItem key={'settings'} disablePadding sx={{ display: 'block' }}>
+          <ListItem key="settings" disablePadding sx={{ display: 'block' }}>
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -135,11 +135,11 @@ const AppDrawer = (props: AppDrawerProps) => {
               >
                 <SettingsIcon />
               </ListItemIcon>
-              <ListItemText primary={'settings'} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary="settings" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </Link>
-        <ListItem key={'sginout'} disablePadding sx={{ display: 'block' }}>
+        <ListItem key="sginout" disablePadding sx={{ display: 'block' }}>
           <ListItemButton
             onClick={handleSignOut}
             sx={{
@@ -157,7 +157,7 @@ const AppDrawer = (props: AppDrawerProps) => {
             >
               <LogoutIcon />
             </ListItemIcon>
-            <ListItemText primary={'Sign out'} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText primary="Sign out" sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
       </List>

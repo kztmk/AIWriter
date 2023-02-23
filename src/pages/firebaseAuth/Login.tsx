@@ -36,7 +36,9 @@ const defaultlValues: LoginFormInputs = {
 
 /** Firebase  Email & password authentication form */
 const Login = () => {
-  const { isLoading, isError, error, success, user } = useAppSelector(selectFirebaseAuth);
+  const {
+    isLoading, isError, error, success,
+  } = useAppSelector(selectFirebaseAuth);
   const dispatch = useAppDispatch();
 
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
@@ -64,7 +66,6 @@ const Login = () => {
 
   useEffect(() => {
     const loginInfo = localStorage.getItem('loginInfo');
-    console.log(`loginInfo: ${loginInfo}`);
     if (loginInfo) {
       const { email, password, rememberMe } = JSON.parse(loginInfo);
       if (rememberMe) {
@@ -73,6 +74,7 @@ const Login = () => {
         setValue('rememberMe', true);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -171,14 +173,14 @@ const Login = () => {
                   <FormControlLabel
                     label="Save My info"
                     labelPlacement="end"
-                    control={
+                    control={(
                       <Checkbox
                         {...field}
                         id="rememberMe"
                         sx={{ margin: 2 }}
                         checked={field.value}
                       />
-                    }
+                    )}
                   />
                 )}
               />

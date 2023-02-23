@@ -23,10 +23,10 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useAppDispatch } from '../app/hooks';
 import az from '../assets/sort_asc.svg';
 import za from '../assets/sort_desc.svg';
-import { fetchCategories } from '../features/userWordpress/asyncThunk/fetchCategories';
-import { fetchPosts } from '../features/userWordpress/asyncThunk/fetchPosts';
-import { fetchTags } from '../features/userWordpress/asyncThunk/fetchTags';
-import { Category, GetPostsRequestArguments, Tag, UserWordPress } from '../types';
+import fetchCategories from '../features/userWordpress/asyncThunk/fetchCategories';
+import fetchPosts from '../features/userWordpress/asyncThunk/fetchPosts';
+import fetchTags from '../features/userWordpress/asyncThunk/fetchTags';
+import type { Category, Tag, UserWordPress } from '../types';
 
 const SortSwitch = styled(Switch)(({ theme }) => ({
   width: 100,
@@ -139,6 +139,7 @@ const PostsFilter = (props: PostFilterProps) => {
       getTags();
     }
     getPosts({ ...defaultValues, url: targetWp.url });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // refresh category
@@ -151,10 +152,11 @@ const PostsFilter = (props: PostFilterProps) => {
     getTags();
   };
 
-  const { control, handleSubmit, reset, register, getValues, setValue } =
-    useForm<PostsFilterArguments>({
-      defaultValues: { ...defaultValues, url: targetWp.url },
-    });
+  const {
+    control, handleSubmit, reset, register, getValues, setValue,
+  } = useForm<PostsFilterArguments>({
+    defaultValues: { ...defaultValues, url: targetWp.url },
+  });
 
   // form submit with validateion
   const onSubmit = (data: PostsFilterArguments) => {
@@ -169,7 +171,7 @@ const PostsFilter = (props: PostFilterProps) => {
   };
 
   const invalidToDate = (date: DateTime | null): boolean => {
-    /* 
+    /*
       1. fromDate is null => true;
       2. toDate is null => true;
     */
@@ -184,13 +186,11 @@ const PostsFilter = (props: PostFilterProps) => {
   };
 
   const fetchPrev = () => {
-    console.log('click prev 10');
     if (getValues('page') > 1) setValue('page', getValues('page') - 1);
     handleSubmit(onSubmit)();
   };
 
   const fetchNext = () => {
-    console.log('click next 10');
     setValue('page', getValues('page') + 1);
     handleSubmit(onSubmit)();
   };
@@ -229,12 +229,12 @@ const PostsFilter = (props: PostFilterProps) => {
                   <Controller
                     control={control}
                     name="orderby"
-                    defaultValue={'date'}
+                    defaultValue="date"
                     render={({ field: { ref, onChange, ...field } }) => (
                       <Autocomplete
                         options={['author', 'date', 'title']}
                         onChange={(_, data) => onChange(data)}
-                        defaultValue={''}
+                        defaultValue=""
                         renderInput={(params) => (
                           <TextField
                             inputRef={ref}
@@ -251,7 +251,7 @@ const PostsFilter = (props: PostFilterProps) => {
                   <Controller
                     control={control}
                     name="order"
-                    defaultValue={true}
+                    defaultValue
                     render={({ field: { onChange, value, ...field } }) => (
                       <FormControlLabel
                         label="Order"
@@ -329,7 +329,11 @@ const PostsFilter = (props: PostFilterProps) => {
                         isFuture: (date) => isFuture(date) || 'Enter past date',
                       },
                     }}
-                    render={({ field: { ref, onBlur, name, ...restField }, fieldState }) => (
+                    render={({
+                      field: {
+                        ref, onBlur, name, ...restField
+                      }, fieldState,
+                    }) => (
                       <DatePicker
                         {...restField}
                         inputRef={ref}
@@ -356,11 +360,14 @@ const PostsFilter = (props: PostFilterProps) => {
                       validate: {
                         isValid: (date) => date == null || date?.isValid || 'Invalid date',
                         isFuture: (date) => isFuture(date) || 'Enter past date',
-                        invalidToDate: (date) =>
-                          invalidToDate(date) || 'Enter future date than from',
+                        invalidToDate: (date) => invalidToDate(date) || 'Enter future date than from',
                       },
                     }}
-                    render={({ field: { ref, onBlur, name, ...restField }, fieldState }) => (
+                    render={({
+                      field: {
+                        ref, onBlur, name, ...restField
+                      }, fieldState,
+                    }) => (
                       <DatePicker
                         {...restField}
                         inputRef={ref}

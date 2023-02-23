@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Timeline from '@mui/lab/Timeline';
 import timelineItemClasses from '@mui/lab/TimelineItem/timelineItemClasses';
 import Box from '@mui/material/Box';
@@ -23,16 +24,14 @@ const PostsLine: React.FC<PostLineProps> = (props) => {
             },
           }}
         >
-          {targetWp.posts.map((post) => {
-            return (
-              <PostItem
-                post={post}
-                categories={targetWp.categories}
-                tags={targetWp.tags}
-                key={post.id}
-              />
-            );
-          })}
+          {targetWp.posts.map((post) => (
+            <PostItem
+              post={post}
+              categories={targetWp.categories}
+              tags={targetWp.tags}
+              key={post.id}
+            />
+          ))}
         </Timeline>
       </Box>
     </Box>

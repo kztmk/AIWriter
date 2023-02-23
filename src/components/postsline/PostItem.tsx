@@ -1,12 +1,12 @@
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
-import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import TimelineItem from '@mui/lab/TimelineItem';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import Typography from '@mui/material/Typography';
-import { Category, Post, Tag, UserWordPress } from '../../types';
 import parse from 'html-react-parser';
+import { Category, Post, Tag } from '../../types';
 
 type TimelineItemProps = {
   post: Post;
@@ -27,6 +27,7 @@ const PostItem = (props: TimelineItemProps) => {
       selectFrom = tags;
     }
 
+    // eslint-disable-next-line no-plusplus
     for (let i = 0; i < args.taxonomyOfPost.length; i++) {
       const element = categories.find((c) => c.id === args.taxonomyOfPost[i]);
       if (element) {

@@ -1,12 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Tag } from '../../../types';
 
-export const fetchTags = createAsyncThunk<
-  Tag[],
-  string,
-  {
-    rejectValue: string;
-  }
+const fetchTags = createAsyncThunk<
+Tag[],
+string,
+{
+  rejectValue: string;
+}
 >('targetWp/fetchTags', async (url, thunkApi) => {
   try {
     const response = await fetch(`${url}/wp-json/wp/v2/tags`, {
@@ -18,3 +18,5 @@ export const fetchTags = createAsyncThunk<
     return thunkApi.rejectWithValue('Unknown Error: fetch tag');
   }
 });
+
+export default fetchTags;

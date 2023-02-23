@@ -1,24 +1,23 @@
-import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
+import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import { WpPostStepperInputData, StepperProps } from '../WpPostStepper';
-import { Controller, useForm } from 'react-hook-form';
+import Typography from '@mui/material/Typography';
 import { useContext, useState } from 'react';
-import { Category, Post, Tag, WpRestApiErrorResponse } from '../../../types';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogActions from '@mui/material/DialogActions';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import { useAppDispatch } from '../../../app/hooks';
-import { fetchPosts } from '../../../features/userWordpress/asyncThunk/fetchPosts';
-import { PostsFilterArguments } from '../../PostsFilter';
+import { Controller, useForm } from 'react-hook-form';
+import type {
+  Category, Post, Tag, WpRestApiErrorResponse,
+} from '../../../types';
+import { StepperProps, WpPostStepperInputData } from '../WpPostStepperInputData';
 
 interface PostWordPressFormParams {
   title: string;
@@ -41,7 +40,7 @@ interface AddPostRequestParams {
   tags: number[];
 }
 
-const PostReviewer = (props: StepperProps & { setPublishedUrl: Function }) => {
+const PostReviewer = (props: StepperProps & { setPublishedUrl: (url:string) => void }) => {
   const { currentState, setCurrentState, targetWp } = useContext(WpPostStepperInputData);
   const { handleNext, handleBack, setPublishedUrl } = props;
 
@@ -50,34 +49,11 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: Function }) => {
   const [resultMessage, setResultMessage] = useState('');
   const [postResult, setPostResult] = useState('');
 
-  const { control, register, handleSubmit, reset } = useForm<PostWordPressFormParams>({
+  const {
+    control, register, handleSubmit, reset,
+  } = useForm<PostWordPressFormParams>({
     defaultValues: defaultlValues,
   });
-
-  const handlePost = (data: PostWordPressFormParams) => {
-    let categoryNumber = [];
-    if (data.categories) {
-      categoryNumber.push(Number(data.categories.id));
-    }
-    let selectedTags = [];
-    for (let i = 0; i < data.tags.length; i++) {
-      selectedTags.push(Number(data.tags[i].id));
-    }
-    // parameters
-    const postParams: AddPostRequestParams = {
-      title: data.title,
-      content: currentState.htmlForPost,
-      excerpt: currentState.htmlForPost,
-      categories: categoryNumber,
-      tags: selectedTags,
-      status: 'publish',
-    };
-
-    console.log(postParams);
-
-    // post to wordPress
-    createNewPost(postParams);
-  };
 
   const createNewPost = async (postArgs: AddPostRequestParams) => {
     try {
@@ -122,19 +98,28 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: Function }) => {
     }
   };
 
-  const PostingDialog = () => {
-    return (
-      <Box
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000000 }}
-      >
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={onPosting}
-        >
-          <CircularProgress sx={{ zIndex: 100000000 }} />
-        </Backdrop>
-      </Box>
-    );
+  const handlePost = (data: PostWordPressFormParams) => {
+    const categoryNumber = [];
+    if (data.categories) {
+      categoryNumber.push(Number(data.categories.id));
+    }
+    const selectedTags = [];
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < data.tags.length; i++) {
+      selectedTags.push(Number(data.tags[i].id));
+    }
+    // parameters
+    const postParams: AddPostRequestParams = {
+      title: data.title,
+      content: currentState.htmlForPost,
+      excerpt: currentState.htmlForPost,
+      categories: categoryNumber,
+      tags: selectedTags,
+      status: 'publish',
+    };
+
+    // post to wordPress
+    createNewPost(postParams);
   };
 
   const handleCloseDialog = () => {
@@ -142,28 +127,6 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: Function }) => {
     if (postResult === 'Post Published Success!') {
       handleNext();
     }
-  };
-
-  const PostResultDialog = () => {
-    return (
-      <Dialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        sx={{ zIndex: 100000 }}
-      >
-        <DialogTitle id="alert-dialog-title">{postResult}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">{resultMessage}</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} autoFocus>
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
   };
 
   const onSubmit = (data: PostWordPressFormParams) => {
@@ -176,7 +139,10 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: Function }) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container>
             <Grid item xs={12}>
-              <Typography variant="h4">Post to:{targetWp.name}</Typography>
+              <Typography variant="h4">
+                Post to:
+                {targetWp.name}
+              </Typography>
             </Grid>
             <Grid item xs={12} sm={12} sx={{ marginY: 2 }}>
               <TextField label="title" fullWidth {...register('title')} />
@@ -246,8 +212,35 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: Function }) => {
           </Box>
         </form>
       </Box>
-      <PostingDialog />
-      <PostResultDialog />
+      <Box
+        sx={{
+          display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000000,
+        }}
+      >
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={onPosting}
+        >
+          <CircularProgress sx={{ zIndex: 100000000 }} />
+        </Backdrop>
+      </Box>
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        sx={{ zIndex: 100000 }}
+      >
+        <DialogTitle id="alert-dialog-title">{postResult}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">{resultMessage}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
