@@ -19,13 +19,6 @@ const PostItem = (props: TimelineItemProps) => {
 
   const taxonomyToText = (args: { taxonomyOfPost: number[]; type: string }) => {
     let text = '';
-    let selectFrom;
-
-    if (args.type === 'category') {
-      selectFrom = categories;
-    } else {
-      selectFrom = tags;
-    }
 
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < args.taxonomyOfPost.length; i++) {

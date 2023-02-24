@@ -39,7 +39,7 @@ interface AddPostRequestParams {
 }
 
 const PostReviewer = (props: StepperProps & { setPublishedUrl: (url: string) => void }) => {
-  const { currentState, setCurrentState, targetWp } = useContext(WpPostStepperInputData);
+  const { currentState, targetWp } = useContext(WpPostStepperInputData);
   const { handleNext, handleBack, setPublishedUrl } = props;
 
   const [onPosting, setOnPosting] = useState(false);
@@ -157,6 +157,7 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: (url: string) => 
                     renderInput={(params) => (
                       <Stack direction="row">
                         <TextField
+                          {...field}
                           inputRef={ref}
                           {...params}
                           InputLabelProps={{ shrink: true }}
@@ -183,6 +184,7 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: (url: string) => 
                     renderInput={(params) => (
                       <Stack direction="row">
                         <TextField
+                          {...field}
                           inputRef={ref}
                           {...params}
                           InputLabelProps={{ shrink: true }}

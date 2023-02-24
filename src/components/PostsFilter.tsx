@@ -28,7 +28,7 @@ import fetchPosts from '../features/userWordpress/asyncThunk/fetchPosts';
 import fetchTags from '../features/userWordpress/asyncThunk/fetchTags';
 import type { Category, Tag, UserWordPress } from '../types';
 
-const SortSwitch = styled(Switch)(({ theme }) => ({
+const SortSwitch = styled(Switch)(() => ({
   width: 100,
   height: 54,
   padding: 7,
@@ -236,6 +236,7 @@ const PostsFilter = (props: PostFilterProps) => {
                         defaultValue=""
                         renderInput={(params) => (
                           <TextField
+                            {...field}
                             inputRef={ref}
                             {...params}
                             InputLabelProps={{ shrink: true }}
@@ -274,6 +275,7 @@ const PostsFilter = (props: PostFilterProps) => {
                         renderInput={(params) => (
                           <Stack direction="row">
                             <TextField
+                              {...field}
                               inputRef={ref}
                               {...params}
                               InputLabelProps={{ shrink: true }}
@@ -303,6 +305,7 @@ const PostsFilter = (props: PostFilterProps) => {
                         renderInput={(params) => (
                           <Stack direction="row">
                             <TextField
+                              {...field}
                               inputRef={ref}
                               {...params}
                               InputLabelProps={{ shrink: true }}

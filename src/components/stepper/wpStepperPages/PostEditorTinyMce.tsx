@@ -102,9 +102,9 @@ const PostEditorTinyMce = (props: StepperProps) => {
   };
 
   const [convertShortCode, setConvertShortCode] = useState(true);
-  const [uploading, setUploading] = useState(false);
+  // const [uploading, setUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [openErrorDialog, setOpenErrorDialog] = useState(false);
+  // const [openErrorDialog, setOpenErrorDialog] = useState(false);
 
   // use convert chatLogs to tinyMCE content
   const baloonLeftPrefix = '<!-- baloon-left-prefix --><div class="baloon_left">';
@@ -234,7 +234,7 @@ const PostEditorTinyMce = (props: StepperProps) => {
     const formData = new FormData();
     formData.append('file', file);
 
-    setUploading(true);
+    // setUploading(true);
 
     try {
       const response = await fetch(`${targetWp.url}/wp-json/wp/v2/media`, {
@@ -245,13 +245,13 @@ const PostEditorTinyMce = (props: StepperProps) => {
         body: formData,
       });
 
-      setUploading(false);
+      // setUploading(false);
 
       const data = await response.json();
 
       return success(data.source_url);
     } catch (error) {
-      setUploading(false);
+      // setUploading(false);
       failure('Image upload failed');
     }
   };
@@ -270,16 +270,16 @@ const PostEditorTinyMce = (props: StepperProps) => {
       const input = document.getElementById('img-file') as HTMLInputElement;
       if (!input) return;
       input.click();
-      input.onchange = function () {
+      input.onchange = () => {
         const file = (input as any)?.files[0];
 
         // check file size
         if (file.size > 2000000) {
           alert('File size is too large');
-          setErrorMessage('File size is too large');
+          // setErrorMessage('File size is too large');
           return;
         }
-        setUploading(true);
+        // setUploading(true);
         handleImageUpload(
           file,
           (imageUrl: string) => {
@@ -289,7 +289,7 @@ const PostEditorTinyMce = (props: StepperProps) => {
             setErrorMessage(errorMsg);
           }
         );
-        setUploading(false);
+        // setUploading(false);
       };
     }
   };

@@ -48,7 +48,7 @@ const WpPostStepper = (props: PosterProps) => {
   const [publishedUrl, setPublishedUrl] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
   const { closeMe } = props;
-  const { isLoading, isError, error, success, targetWp } = useAppSelector(selectTargetWp);
+  const { isLoading, isError, error, targetWp } = useAppSelector(selectTargetWp);
   const dispatch = useAppDispatch();
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {

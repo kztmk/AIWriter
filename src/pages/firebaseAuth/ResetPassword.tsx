@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { z } from 'zod';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import ErrorDialog from '../../components/ErrorDialog';
@@ -49,7 +50,12 @@ const ResetPassword = () => {
 
   useEffect(() => {
     if (success === 'resetPassword') {
-      alert('Password reset email sent. Please check your email.');
+      Swal.fire({
+        title: 'Success!',
+        text: 'Please check your email to reset your password.',
+        icon: 'success',
+        confirmButtonText: 'OK',
+      });
     }
   }, [success]);
 

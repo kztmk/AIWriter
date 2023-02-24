@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {
   User as FirebaseUser,
-  AuthError,
   getAuth,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
@@ -116,7 +115,7 @@ const firebaseAuthSlice = createSlice({
       state.success = 'idle';
       state.error = undefined;
     });
-    builder.addCase(signOut.fulfilled, (state) => initialState);
+    builder.addCase(signOut.fulfilled, () => initialState);
     builder.addCase(signOut.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;

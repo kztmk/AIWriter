@@ -45,7 +45,7 @@ const defaultValues: AddWordPressInputs = {
 const AddWordPress = () => {
   // dispatch
   const dispatch = useAppDispatch();
-  const { isLoading, isError, error, success, targetWp } = useAppSelector(selectTargetWp);
+  const { isError, error, success, targetWp } = useAppSelector(selectTargetWp);
   const { wordPressList } = useAppSelector(selectWordPressList);
 
   // error dialog
