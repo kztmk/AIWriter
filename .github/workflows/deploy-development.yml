@@ -17,7 +17,7 @@ jobs:
           node-version: '18'
       - name: lint and test
         run: |
-
+          echo env:'${{ env.DEV_VITE_API_KEY }}'
           npm install
           npm run lint
       - run: npm run build:dev
