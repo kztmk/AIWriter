@@ -11,7 +11,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { CSSObject, styled, Theme } from '@mui/material/styles';
-import Link from '@mui/material/Link';
+import Tooltip from '@mui/material/Tooltip';
+import { Link } from 'react-router-dom';
 
 import { useAppDispatch } from '../../app/hooks';
 import WordPressListImage from '../../assets/wordpress-w.svg';
@@ -92,7 +93,7 @@ const AppDrawer = (props: AppDrawerProps) => {
       </DrawerHeader>
       <Divider />
       <List>
-        <Link href="/">
+        <Link to="/">
           <ListItem key="wordpress" disablePadding sx={{ display: 'block' }}>
             <ListItemButton
               sx={{
@@ -101,15 +102,17 @@ const AppDrawer = (props: AppDrawerProps) => {
                 px: 2.5,
               }}
             >
-              <Avatar
-                alt="WordPress List"
-                src={WordPressListImage}
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                }}
-              />
+              <Tooltip title="Your WordPress List">
+                <Avatar
+                  alt="WordPress List"
+                  src={WordPressListImage}
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                />
+              </Tooltip>
               <ListItemText primary="wordpress" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
@@ -117,7 +120,7 @@ const AppDrawer = (props: AppDrawerProps) => {
       </List>
       <Divider />
       <List>
-        <Link href="/settings">
+        <Link to="/settings">
           <ListItem key="settings" disablePadding sx={{ display: 'block' }}>
             <ListItemButton
               sx={{
@@ -133,7 +136,9 @@ const AppDrawer = (props: AppDrawerProps) => {
                   justifyContent: 'center',
                 }}
               >
-                <SettingsIcon />
+                <Tooltip title="Settings">
+                  <SettingsIcon />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText primary="settings" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
@@ -155,7 +160,9 @@ const AppDrawer = (props: AppDrawerProps) => {
                 justifyContent: 'center',
               }}
             >
-              <LogoutIcon />
+              <Tooltip title="Sign out">
+                <LogoutIcon />
+              </Tooltip>
             </ListItemIcon>
             <ListItemText primary="Sign out" sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
