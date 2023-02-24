@@ -6,18 +6,10 @@ name: Deploy to Firebase DevHosting on merge
   push:
     branches:
       - develop
-env:
-  VITE_API_KEY:'${{ var.DEV_VITE_API_KEY }}'
-  VITE_AUTH_DOMAIN:'${{ var.DEV_VITE_AUTH_DOMAIN }}'
-  VITE_DATABASE_URL:'${{ var.DEV_VITE_DATABASE_URL }}'
-  VITE_PROJECT_ID:'${{ var.DEV_VITE_PROJECT_ID }}'
-  VITE_STORAGE_BUCKET:'${{ var.DEV_VITE_STORAGE_BUCKET }}'
-  VITE_MESSAGING_SENDER_ID:'${{ var.DEV_VITE_MESSAGEING_SENDER_ID }}'
-  VITE_APP_ID:'${{ var.DEV_VITE_APP_ID }}'
-  VITE_MEASUREMENT_ID:'${{ var.DEV_VITE_MEASRUREMENT_ID }}'
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    environment: development
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js 18
@@ -26,6 +18,15 @@ jobs:
           node-version: '18'
       - name: lint and test
         run: |
+          touch .env.development
+          echo VITE_API_KEY='${{ vars.VITE_API_KEY }}' >> .env.development
+          echo VITE_AUTH_DOMAIN='${{ vars.VITE_AUTH_DOMAIN }}' >> .env.development
+          echo VITE_DATABASE_URL='${{ vars.VITE_DATABASE_URL }}' >> .env.development
+          echo VITE_PROJECT_ID='${{ vars.VITE_PROJECT_ID }}' >> .env.development
+          echo VITE_STORAGE_BUCKET='${{ vars.VITE_STORAGE_BUCKET }}' >> .env.development
+          echo VITE_MESSAGING_SENDER_ID='${{ vars.VITE_MESSAGEING_SENDER_ID }}' >> .env.development
+          echo VITE_APP_ID='${{ vars.VITE_APP_ID }}' >> .env.development
+          echo VITE_MEASUREMENT_ID='${{ vars.VITE_MEASRUREMENT_ID }}' >> .env.development
           npm install
           npm run lint
       - run: npm run build:dev
