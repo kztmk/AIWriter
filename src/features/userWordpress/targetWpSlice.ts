@@ -59,7 +59,7 @@ const targetWpSlice = createSlice({
       state.error = undefined;
       state.success = 'idle';
     },
-    initializeWp: (state) => initialState,
+    initializeWp: () => initialState,
   },
   extraReducers: (builder) => {
     // fetch token action

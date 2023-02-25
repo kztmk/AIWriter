@@ -2,11 +2,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { z } from 'zod';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
+import ErrorDialog from '../components/ErrorDialog';
+import LoadingLayer from '../components/LoadingLayer';
 import { selectSettings, setSettings } from '../features/settings/settingsSlice';
 
 const schema = z.object({
@@ -20,6 +22,7 @@ const defaultValues: SettingsInputs = {
 };
 
 const Settings = () => {
+  const [openErrorDialog, setOpenErrorDialog] = useState(false);
   const dispatch = useAppDispatch();
   const { isLoading, isError, settings, errorMessage } = useAppSelector(selectSettings);
 
@@ -41,6 +44,16 @@ const Settings = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (isError) {
+      setOpenErrorDialog(true);
+    }
+  }, [isError]);
+
+  const handleCloseErrorDialog = () => {
+    setOpenErrorDialog(false);
+  };
+
   const onSubmit: SubmitHandler<SettingsInputs> = (data) => {
     try {
       dispatch(setSettings(data));
@@ -49,7 +62,6 @@ const Settings = () => {
         icon: 'success',
       });
     } catch (error) {
-      console.error(error);
       Swal.fire({
         title: 'Something wrong!',
         icon: 'error',
@@ -97,6 +109,12 @@ const Settings = () => {
           Reset
         </Button>
       </Box>
+      <LoadingLayer open={isLoading} />
+      <ErrorDialog
+        open={openErrorDialog}
+        error={{ code: '', message: errorMessage }}
+        onClose={handleCloseErrorDialog}
+      />
     </Box>
   );
 };

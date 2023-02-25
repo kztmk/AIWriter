@@ -1,19 +1,19 @@
 import type { PostsFilterArguments } from '../../../components/PostsFilter';
 
-const expansionRecord = (records: Record<string, unknown>): string => {
-  let searchParams = '';
-  // eslint-disable-next-line no-restricted-syntax, guard-for-in
-  for (const record in records) {
-    searchParams += `${record},`;
-  }
+// const expansionRecord = (records: Record<string, unknown>): string => {
+//   let searchParams = '';
+//   // eslint-disable-next-line no-restricted-syntax, guard-for-in
+//   for (const record in records) {
+//     searchParams += `${record},`;
+//   }
 
-  // delete last comma
-  if (searchParams.length > 0) {
-    searchParams = searchParams.slice(0, -1);
-  }
+//   // delete last comma
+//   if (searchParams.length > 0) {
+//     searchParams = searchParams.slice(0, -1);
+//   }
 
-  return searchParams;
-};
+//   return searchParams;
+// };
 
 /* search parameters use only
  * search

@@ -62,8 +62,7 @@ export type ChatBaseProps = {
 const ChatBase: React.FC<ChatBaseProps> = (props) => {
   // eslint-disable-next-line react/prop-types
   const { addChatLogs } = props;
-  const { isLoading, isError, success, error, requestArgs, response } =
-    useAppSelector(selectChatGpt);
+  const { isLoading, isError, success, error, response } = useAppSelector(selectChatGpt);
   const dispatch = useAppDispatch();
 
   const { settings } = useAppSelector(selectSettings);
@@ -173,6 +172,7 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
                   defaultValue={{ name: 'davinci', val: 'text-davinci-003' }}
                   renderInput={(params) => (
                     <TextField
+                      {...field}
                       inputRef={ref}
                       {...params}
                       InputLabelProps={{ shrink: true }}
@@ -211,6 +211,7 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
                   defaultValue={2048}
                   renderInput={(params) => (
                     <TextField
+                      {...field}
                       inputRef={ref}
                       {...params}
                       InputLabelProps={{ shrink: true }}
