@@ -1,14 +1,14 @@
+import { ThemeProvider } from '@emotion/react';
+import { initializeApp } from 'firebase/app';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import './index.css';
-import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
-import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from '@emotion/react';
-import theme from './theme';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+
+import App from './App';
 import store from './app/store';
+import './index.css';
+import theme from './theme';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -20,17 +20,16 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+initializeApp(firebaseConfig);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Provider store={store}>
+      <Provider store={store}>
+        <BrowserRouter>
           <App />
-        </Provider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </Provider>
     </ThemeProvider>
   </React.StrictMode>
 );
