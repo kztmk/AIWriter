@@ -60,6 +60,10 @@ const targetWpSlice = createSlice({
       state.success = 'idle';
     },
     initializeWp: () => initialState,
+    resetError: (state) => {
+      state.isError = false;
+      state.error = undefined;
+    },
   },
   extraReducers: (builder) => {
     // fetch token action
@@ -140,5 +144,5 @@ const targetWpSlice = createSlice({
 });
 
 export const selectTargetWp = (state: RootState) => state.targetWp;
-export const { setTargetWp, initializeWp } = targetWpSlice.actions;
+export const { setTargetWp, initializeWp, resetError } = targetWpSlice.actions;
 export default targetWpSlice.reducer;

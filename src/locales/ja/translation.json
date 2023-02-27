@@ -1,0 +1,134 @@
+{
+  "chatBase": {
+    "swalErrorTitle": "ChatGPTのAPIキーが入力されていません",
+    "swalErrorIcon": "確認",
+    "swalErrorText": "設定ページでAPIキーを入力してください",
+    "errrorDialogTitle": "エラー",
+    "errorDialogClose": "閉じる",
+    "GptModel": "GPTモデル",
+    "temperature": "多様性",
+    "maxTokens": "最大トークン数",
+    "prompt": "質問",
+    "send": "送信"
+  },
+  "signin": {
+    "signinTitle": "サインイン",
+    "inputLabel": {
+      "email": "メールアドレス",
+      "password": "パスワード"
+    },
+    "rememberMe": "サインイン情報を保存",
+    "forgotPassword": "パスワードをお忘れですか?"
+  },
+  "stepperWp": {
+    "stepperTitle": "新規記事作成",
+    "step1Title": "ChatGPTと会話",
+    "step2Title": "投稿の編集",
+    "step3Title": "記事タイトル・カテゴリーの設定",
+    "buttonNext": "次へ",
+    "buttonBack": "戻る",
+    "buttonReset": "リセット",
+    "buttonPost": "投稿",
+    "buttonFinish": "完了",
+    "finishMessage": "記事投稿が完了しました。",
+    "errorFetchToken": "エラー: トークンの取得に失敗しました。.\n"
+  },
+  "chatPanel": {
+    "promptON": "質問を表示",
+    "promptOFF": "質問を非表示",
+    "reset": "リセット",
+    "resetDialogTitle": "チャット履歴をクリアしますか?",
+    "resetDialogHtml": "<h3>クリアすると元には戻せません。</h3>",
+    "resetDialogConfirm": "はい、クリアします。",
+    "resetDialogCancel": "キャンセル"
+  },
+  "postEditor": {
+    "convertToBalloon": "吹き出し用ショートコードに変換する(Word Balloonプラグインが必要です)"
+  },
+  "postReviewer": {
+    "postTo": "投稿先",
+    "postTitle": "記事タイトル",
+    "postCategory": "カテゴリー",
+    "postTag": "タグ",
+    "postResultSuccess": "投稿が完了しました。",
+    "postResultError": "投稿に失敗しました。"
+  },
+  "postsFilter": {
+    "componentTitle": "記事フィルター(全てオプショナル)",
+    "searchWord": "検索ワード",
+    "orderBy": "並び替え項目",
+    "sortOrder": "並び替え順",
+    "category": "カテゴリー",
+    "tags": "タグ",
+    "fromDate": "投稿日(From)",
+    "toDate": "投稿日(To)",
+    "buttonReset": "リセット",
+    "buttonPrev10": "前の10件",
+    "buttonNext10": "次の10件",
+    "buttonSubmit": "検索",
+    "dateErrorInvalid": "日付の形式が不正です。",
+    "dateErrorPast": "本日以前の日付を指定してください。",
+    "dateErrorPastFrom": "From日付以後の日付を指定してください。",
+    "reloadCategories": "カテゴリ再取得",
+    "reloadTags": "タグ再取得"
+  },
+  "targetWp": {
+    "fabAddPost": "新規記事作成"
+  },
+  "appDrawer": {
+    "drawerTooltipWpList": "WordPressリスト",
+    "drawerTooltipSettings": "設定",
+    "drawerTooltipSignout": "サインアウト"
+  },
+  "menuBar": {
+    "title": "AIWriter - ChatGPTで記事作成"
+  },
+  "passwordReset": {
+    "swalTitle": "リセット用リンク送信完了",
+    "swalText": "メールアドレスにリセット用リンクを送信しました。",
+    "labelEmail": "メールアドレス",
+    "buttonSend": "パスワードをリセット",
+    "backToSignin": "サインイン画面に戻る"
+  },
+  "addWordPress": {
+    "componentTitle": "WordPressリストへ追加",
+    "warnWrongUrl": "https://で始まる正しいURLを入力してください。",
+    "warnUsername": "WordPressのログインユーザ名を入力してください。",
+    "warnPassword": "WordPressのログインパスワードを入力してください。",
+    "swalErrorTitle": "エラー",
+    "formLabelUrl": "WordPress URL",
+    "formLabelUsername": "WordPressユーザー名",
+    "formLabelPassword": "WordPressパスワード",
+    "buttonAdd": "リストへ追加",
+    "buttonReset": "リセット"
+  },
+  "wordPressList": {
+    "headerAction": "アクション",
+    "headerWpTitle": "WordPressタイトル",
+    "headerWpUsername": "ユーザー名",
+    "addPostErrorTitle": "エラー",
+    "addPostErrorText": "このWordPressの投稿に必要な情報が見つかりません。。",
+    "deleteTitle": "リストから削除？",
+    "deleteText": "このWardPressをリストから削除しますか？",
+    "deleteConfirm": "削除する",
+    "deleteCancel": "キャンセル",
+    "deleteSuccessTitle": "削除完了",
+    "deleteSuccessText": "リストから削除しました。",
+    "deleteErrorTitle": "エラー",
+    "deleteErrorText": "リスト内にで削除対象のWordPressが見つかりません。",
+    "tooltipCreatePost": "新規記事作成",
+    "tooltipInfo": "WordPress情報",
+    "tooltipDelete": "リストから削除",
+    "tooltipAddWordPress": "WordPressリストへ新規追加",
+    "dataGridTitleName": "WordPress名",
+    "dataGridUsername": "ユーザ名",
+    "dataGridUrl": "URL",
+    "emptyListMessage": "WordPressリストが空です。"
+  },
+  "settings": {
+    "swalSuccessTitle": "保存完了",
+    "swalErrorTitle": "エラー",
+    "buttonSave": "保存",
+    "buttonReset": "リセット"
+  }
+}

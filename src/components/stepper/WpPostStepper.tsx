@@ -18,6 +18,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import fetchToken from '../../features/userWordpress/asyncThunk/fetchToken';
@@ -27,8 +28,6 @@ import ChatPanel from '../chatPanel/ChatPanel';
 import PostEditor from './wpStepperPages/PostEditorTinyMce';
 import PostReviewer from './wpStepperPages/PostReviewer';
 import { initialStepData, WpPostStepperInputData } from './WpPostStepperInputData';
-
-const steps = ['Generate Post', 'Edit Post', 'Set Title, category, tags'];
 
 type PosterProps = {
   closeMe: ({ openStepper, finishState }: StepperCloseProps) => void;
@@ -56,6 +55,10 @@ const WpPostStepper = (props: PosterProps) => {
     setCurrentState,
     targetWp,
   };
+
+  const { t } = useTranslation();
+
+  const steps = [t('stepperWp.step1Title'), t('stepperWp.step2Title'), t('stepperWp.step3Title')];
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -122,7 +125,7 @@ const WpPostStepper = (props: PosterProps) => {
       </Box>
       <Paper variant="outlined" sx={{ mb: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
         <Typography component="h1" variant="h4" align="center">
-          Publish new Post
+          {t('stepperWp.stepperTitle')}
         </Typography>
         <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
           {steps.map((label) => (
@@ -134,7 +137,7 @@ const WpPostStepper = (props: PosterProps) => {
         {activeStep === steps.length ? (
           <>
             <Typography variant="h5" gutterBottom>
-              Post successfully done.
+              {t('stepperWp.finishMessage')}
             </Typography>
             <Typography variant="body1">
               <Link href={publishedUrl}>{publishedUrl}</Link>
@@ -145,7 +148,7 @@ const WpPostStepper = (props: PosterProps) => {
               variant="contained"
               onClick={() => closeMe({ openStepper: false, finishState: 'success' })}
             >
-              Finish
+              {t('stepperWp.buttonFinish')}
             </Button>
           </>
         ) : (
@@ -179,7 +182,7 @@ const WpPostStepper = (props: PosterProps) => {
         <DialogTitle id="alert-dialog-title">Error!</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Error occurred when token renewal.\n
+            {t('stepperWp.errorFetchToken')}
             {error?.message}
           </DialogContentText>
         </DialogContent>

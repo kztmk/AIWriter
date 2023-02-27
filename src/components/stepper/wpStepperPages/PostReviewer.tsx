@@ -14,6 +14,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useContext, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import type { Category, Post, Tag, WpRestApiErrorResponse } from '../../../types';
 import { StepperProps, WpPostStepperInputData } from '../WpPostStepperInputData';
 
@@ -51,6 +52,8 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: (url: string) => 
     defaultValues: defaultlValues,
   });
 
+  const { t } = useTranslation();
+
   const createNewPost = async (postArgs: AddPostRequestParams) => {
     try {
       setOnPosting(true);
@@ -74,16 +77,15 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: (url: string) => 
       if ('id' in data) {
         // success
         const successMessage = `
-          Post published.\n
           URL: ${data.link}
         `;
-        setPostResult('Post Published Success!');
+        setPostResult(t('postReviewer.postResultSuccess') as string);
         setResultMessage(successMessage);
         setOpenDialog(true);
         setPublishedUrl(data.link);
       } else {
         // fail
-        setPostResult('Error occurred.');
+        setPostResult(t('postReviewer.postResultError') as string);
         setResultMessage(data.message);
         setOpenDialog(true);
       }
@@ -120,7 +122,7 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: (url: string) => 
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    if (postResult === 'Post Published Success!') {
+    if (postResult === t('postReviewer.postResultSuccess')) {
       handleNext();
     }
   };
@@ -136,12 +138,12 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: (url: string) => 
           <Grid container>
             <Grid item xs={12}>
               <Typography variant="h4">
-                Post to:
+                {t('postReviewer.postTo')}
                 {targetWp.name}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12} sx={{ marginY: 2 }}>
-              <TextField label="title" fullWidth {...register('title')} />
+              <TextField label={t('postReviewer.postTitle')} fullWidth {...register('title')} />
             </Grid>
             <Grid item xs={6} sm={3} sx={{ marginRight: 2 }}>
               <Controller
@@ -161,7 +163,7 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: (url: string) => 
                           inputRef={ref}
                           {...params}
                           InputLabelProps={{ shrink: true }}
-                          label="Category"
+                          label={t('postReviewer.postCategory')}
                         />
                       </Stack>
                     )}
@@ -188,7 +190,7 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: (url: string) => 
                           inputRef={ref}
                           {...params}
                           InputLabelProps={{ shrink: true }}
-                          label="Tags"
+                          label={t('postReviewer.postTag')}
                         />
                       </Stack>
                     )}
@@ -199,13 +201,13 @@ const PostReviewer = (props: StepperProps & { setPublishedUrl: (url: string) => 
           </Grid>
           <Box sx={{ display: 'flex', justigyContent: 'flex-end' }}>
             <Button onClick={() => handleBack()} sx={{ mt: 3, ml: 1 }}>
-              Back
+              {t('stepperWp.buttonBack')}
             </Button>
             <Button onClick={() => reset()} sx={{ mt: 3, ml: 1 }}>
-              Reset
+              {t('stepperWp.buttonReset')}
             </Button>
             <Button type="submit" variant="contained" sx={{ mt: 3, ml: 1 }}>
-              Post
+              {t('stepperWp.buttonPost')}
             </Button>
           </Box>
         </form>

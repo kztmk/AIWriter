@@ -11,7 +11,8 @@ import Checkbox from '@mui/material/Checkbox';
 // import DialogTitle from '@mui/material/DialogTitle';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Editor } from '@tinymce/tinymce-react';
-import { useContext, useRef, useState } from 'react';
+import { Suspense, useContext, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Editor as TinyMCEEditor } from 'tinymce';
 
@@ -95,16 +96,13 @@ const PostEditorTinyMce = (props: StepperProps) => {
   const { currentState, setCurrentState, targetWp } = useContext(WpPostStepperInputData);
   const { handleNext, handleBack } = props;
   const editorRef = useRef<TinyMCEEditor | null>(null);
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
-    }
-  };
 
   const [convertShortCode, setConvertShortCode] = useState(true);
   // const [uploading, setUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   // const [openErrorDialog, setOpenErrorDialog] = useState(false);
+
+  const { t } = useTranslation();
 
   // use convert chatLogs to tinyMCE content
   const baloonLeftPrefix = '<!-- baloon-left-prefix --><div class="baloon_left">';
@@ -294,14 +292,41 @@ const PostEditorTinyMce = (props: StepperProps) => {
     }
   };
 
+  // const [language, setLanguage] = useState('ja');
+  // const [contents, setContents] = useState('');
+
+  // const handleEditorChange = (content: string, editor: any) => {
+  //   setContents(content);
+  // };
+  // const handleLanguageButtonClick = (e: any) => {
+  //   console.log(`language: ${language}`);
+  //   console.log(`to-${e.value.code}`);
+  //   if (e.value.code === 'ja') {
+  //     setLanguage('ja');
+  //   } else if (e.value.code === 'en') {
+  //     setLanguage('en');
+  //   }
+  // };
+
+  // editor.on('ExecCommand', (e) => {
+  //   if (e.command === 'Lang') {
+  //     console.log(`from-${language}`);
+  //     console.log('Lang', e.value.code);
+  //     handleLanguageButtonClick(e);
+  //   }
+  // });
+
+  // onEditorChange={handleEditorChange}
   return (
-    <>
+    <Suspense>
       <Box>
         <input id="img-file" type="file" name="img-file" style={{ display: 'none' }} />
         <Editor
           apiKey="3cayhsc52gtz702zsmystt6wlvaiu9t316u2ynyfg7j24lir"
           // eslint-disable-next-line no-return-assign
-          onInit={(evt, editor) => (editorRef.current = editor)}
+          onInit={(evt, editor) => {
+            editorRef.current = editor;
+          }}
           initialValue={
             currentState.editedHtml.length === 0 ? `${html}<p></p>` : currentState.editedHtml
           }
@@ -329,7 +354,12 @@ const PostEditorTinyMce = (props: StepperProps) => {
               'wordcount',
             ],
             toolbar:
-              'undo redo | blocks fontsize | bold italic underline strikethrough | link image code table mergetags | typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+              'language | undo redo | blocks fontsize | bold italic underline strikethrough | link image code table mergetags | typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            content_langs: [
+              { title: 'English', code: 'en' },
+              { title: 'Japanese', code: 'ja' },
+            ],
+            language: 'ja',
             automatic_uploads: true,
             file_browser_callback_types: 'image',
             image_advtab: true,
@@ -348,18 +378,18 @@ const PostEditorTinyMce = (props: StepperProps) => {
               onChange={() => setConvertShortCode(!convertShortCode)}
             />
           }
-          label="Convert html to Word Balloon shortcode(require Word Balloon Plugin)"
+          label={t('postEditor.convertToBalloon')}
         />
       </Box>
       <Box sx={{ display: 'flex', justigyContent: 'flex-end' }}>
         <Button onClick={() => handlSteper('back')} sx={{ mt: 3, ml: 1 }}>
-          Back
+          {t('stepperWp.buttonBack')}
         </Button>
         <Button variant="contained" onClick={() => handlSteper('next')} sx={{ mt: 3, ml: 1 }}>
-          Next
+          {t('stepperWp.buttonNext')}
         </Button>
       </Box>
-    </>
+    </Suspense>
   );
 };
 

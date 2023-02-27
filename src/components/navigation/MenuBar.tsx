@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { drawerWidth } from './AppDrawer';
 
@@ -37,7 +38,7 @@ const AppBar = styled(MuiAppBar, {
 
 const MenuBar: React.FC<MenuBarProps> = (props) => {
   const { open, openDrawer } = props;
-
+  const { t } = useTranslation();
   const handleDrawerOpen = () => {
     openDrawer(true);
   };
@@ -58,7 +59,7 @@ const MenuBar: React.FC<MenuBarProps> = (props) => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap component="div">
-          WordPress Post Generator with ChatGPT
+          {t('menuBar.title')}
         </Typography>
       </Toolbar>
     </AppBar>
