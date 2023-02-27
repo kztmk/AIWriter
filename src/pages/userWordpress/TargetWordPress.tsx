@@ -1,19 +1,20 @@
 import AddIcon from '@mui/icons-material/Add';
-import Dialog from '@mui/material/Dialog';
-import Slide from '@mui/material/Slide';
 import Box from '@mui/material/Box';
+import Dialog from '@mui/material/Dialog';
 import Fab from '@mui/material/Fab';
+import Slide from '@mui/material/Slide';
 import Tooltip from '@mui/material/Tooltip';
 import { TransitionProps } from '@mui/material/transitions/transition';
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import PostsLine from '../../components/postsline/PostsLine';
 import PostsFilter, { PostsFilterArguments } from '../../components/PostsFilter';
+import PostsLine from '../../components/postsline/PostsLine';
 import WpPostStepper from '../../components/stepper/WpPostStepper';
-import { selectTargetWp } from '../../features/userWordpress/targetWpSlice';
-import { addWordPress } from '../../features/userWordpress/wordPressListSlice';
 import fetchPosts from '../../features/userWordpress/asyncThunk/fetchPosts';
+import { resetError, selectTargetWp } from '../../features/userWordpress/targetWpSlice';
+import { addWordPress } from '../../features/userWordpress/wordPressListSlice';
 
 export type StepperCloseProps = {
   openStepper: boolean;
@@ -56,6 +57,10 @@ const TargetWordPress: React.FC = () => {
     }
   }, [isLoading]);
 
+  const clearError = () => {
+    dispatch(resetError());
+  };
+
   // error dialog
   useEffect(() => {
     if (isError) {
@@ -65,6 +70,9 @@ const TargetWordPress: React.FC = () => {
         html: `${error?.code}\n${error?.message}`,
         icon: 'error',
         confirmButtonText: 'OK',
+        willClose: () => {
+          clearError();
+        },
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

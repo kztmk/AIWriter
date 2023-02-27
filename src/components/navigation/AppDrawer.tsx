@@ -12,6 +12,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { CSSObject, styled, Theme } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { useAppDispatch } from '../../app/hooks';
@@ -74,7 +75,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const AppDrawer = (props: AppDrawerProps) => {
   const { open, setOpen } = props;
-
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const handleDrawerClose = () => {
     setOpen(false);
@@ -102,9 +103,9 @@ const AppDrawer = (props: AppDrawerProps) => {
                 px: 2.5,
               }}
             >
-              <Tooltip title="Your WordPress List">
+              <Tooltip title={t('appDrawer.drawerTooltipWpList')}>
                 <Avatar
-                  alt="WordPress List"
+                  alt={t('appDrawer.drawerTooltipWpList') as string}
                   src={WordPressListImage}
                   sx={{
                     minWidth: 0,
@@ -113,7 +114,10 @@ const AppDrawer = (props: AppDrawerProps) => {
                   }}
                 />
               </Tooltip>
-              <ListItemText primary="wordpress" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary={t('appDrawer.drawerTooltipWpList')}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
             </ListItemButton>
           </ListItem>
         </Link>
@@ -136,11 +140,14 @@ const AppDrawer = (props: AppDrawerProps) => {
                   justifyContent: 'center',
                 }}
               >
-                <Tooltip title="Settings">
+                <Tooltip title={t('appDrawer.drawerTooltipSettings')}>
                   <SettingsIcon />
                 </Tooltip>
               </ListItemIcon>
-              <ListItemText primary="settings" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary={t('appDrawer.drawerTooltipSettings')}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
             </ListItemButton>
           </ListItem>
         </Link>
@@ -160,11 +167,14 @@ const AppDrawer = (props: AppDrawerProps) => {
                 justifyContent: 'center',
               }}
             >
-              <Tooltip title="Sign out">
+              <Tooltip title={t('appDrawer.drawerTooltipSignout')}>
                 <LogoutIcon />
               </Tooltip>
             </ListItemIcon>
-            <ListItemText primary="Sign out" sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText
+              primary={t('appDrawer.drawerTooltipSignout')}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
           </ListItemButton>
         </ListItem>
       </List>

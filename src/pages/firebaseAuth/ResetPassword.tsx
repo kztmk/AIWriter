@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { z } from 'zod';
@@ -25,7 +26,7 @@ const defaultlValues: ResetPasswordInputs = {
 const ResetPassword = () => {
   const { isLoading, isError, success, error } = useAppSelector(selectFirebaseAuth);
   const dispatch = useAppDispatch();
-
+  const { t } = useTranslation();
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
   const errorObj = error ? { code: '', message: error } : { code: '', message: 'unkonw error.' };
 
@@ -51,12 +52,13 @@ const ResetPassword = () => {
   useEffect(() => {
     if (success === 'resetPassword') {
       Swal.fire({
-        title: 'Success!',
-        text: 'Please check your email to reset your password.',
+        title: t('passwordReset.swalTitle') as string,
+        text: t('passwordReset.swalText') as string,
         icon: 'success',
         confirmButtonText: 'OK',
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success]);
 
   const closeErrorDialog = () => {
@@ -80,7 +82,7 @@ const ResetPassword = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Email"
+                  label={t('passwordReset.labelEmail')}
                   variant="outlined"
                   fullWidth
                   error={!!errors.email}
@@ -95,11 +97,11 @@ const ResetPassword = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2, width: '50%' }}
               >
-                Reset Password
+                {t('passwordReset.buttonSend')}
               </Button>
             </Grid>
             <Grid item xs={12}>
-              <Link to="/">Back to Login</Link>
+              <Link to="/">{t('passwordReset.backToSignin')}</Link>
             </Grid>
           </Grid>
         </Grid>

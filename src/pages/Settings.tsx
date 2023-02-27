@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
 import { z } from 'zod';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
@@ -26,6 +27,7 @@ const Settings = () => {
   const dispatch = useAppDispatch();
   const { isLoading, isError, settings, errorMessage } = useAppSelector(selectSettings);
 
+  const { t } = useTranslation();
   const {
     control,
     handleSubmit,
@@ -58,15 +60,20 @@ const Settings = () => {
     try {
       dispatch(setSettings(data));
       Swal.fire({
-        title: 'Save Sccusess.',
+        title: t('settings.swalSuccessTitle') as string,
         icon: 'success',
       });
     } catch (error) {
       Swal.fire({
-        title: 'Something wrong!',
+        title: t('settings.swalErrorTitle') as string,
         icon: 'error',
       });
     }
+  };
+
+  const handleReset = () => {
+    setValue('chatGptApiKey', defaultValues.chatGptApiKey);
+    reset();
   };
 
   return (
@@ -97,16 +104,16 @@ const Settings = () => {
         }}
       >
         <Button type="submit" size="medium" variant="contained" color="primary">
-          Save
+          {t('settings.buttonSave')}
         </Button>
         <Button
           size="medium"
           variant="contained"
           color="inherit"
           sx={{ ml: 2 }}
-          onClick={() => reset()}
+          onClick={handleReset}
         >
-          Reset
+          {t('settings.buttonReset')}
         </Button>
       </Box>
       <LoadingLayer open={isLoading} />

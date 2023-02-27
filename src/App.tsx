@@ -43,10 +43,10 @@ const App = () => {
             <Route path="/wordpress" element={<TargetWordPress />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/add_wordpress" element={<AddWordPress />} />
-            <Route path="/password-reset" element={<ResetPassword />} />
             <Route path="/" element={<WordPressList />} />
           </Route>
           <Route path="/login" element={<Login />} />
+          <Route path="/password-reset" element={<ResetPassword />} />
         </Routes>
       </Box>
     </Box>

@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
+import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import ErrorDialog from '../../components/ErrorDialog';
@@ -43,6 +44,8 @@ const Login = () => {
   const errorObj = error ? { code: '', message: error } : { code: '', message: '' };
 
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const {
     control,
     handleSubmit,
@@ -112,7 +115,7 @@ const Login = () => {
         <Grid item xs={12}>
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Typography component="h1" variant="h5">
-              Sign in
+              {t('signin.signinTitle')}
             </Typography>
           </Box>
         </Grid>
@@ -125,7 +128,7 @@ const Login = () => {
                 <TextField
                   {...field}
                   id="email"
-                  label="Email Address"
+                  label={t('signin.inputLabel.email')}
                   variant="outlined"
                   fullWidth
                   error={!!errors.email}
@@ -143,7 +146,7 @@ const Login = () => {
                 <TextField
                   {...field}
                   id="password"
-                  label="Password"
+                  label={t('signin.inputLabel.password')}
                   variant="outlined"
                   fullWidth
                   error={!!errors.password}
@@ -161,7 +164,7 @@ const Login = () => {
               variant="contained"
               sx={{ marginTop: 3, marginBottom: 2, marginX: 2 }}
             >
-              Sign In
+              {t('signin.signinTitle')}
             </Button>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Controller
@@ -169,7 +172,7 @@ const Login = () => {
                 control={control}
                 render={({ field }) => (
                   <FormControlLabel
-                    label="Save My info"
+                    label={t('signin.rememberMe')}
                     labelPlacement="end"
                     control={
                       <Checkbox
@@ -182,7 +185,7 @@ const Login = () => {
                   />
                 )}
               />
-              <Link to="/password-reset">Forgot password?</Link>
+              <Link to="/password-reset">{t('signin.forgotPassword')}</Link>
             </Box>
           </Grid>
         </Grid>

@@ -13,21 +13,23 @@ import { FaWordpress } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { z } from 'zod';
+import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import fetchName from '../../features/userWordpress/asyncThunk/fetchName';
 import fetchToken from '../../features/userWordpress/asyncThunk/fetchToken';
 import { selectTargetWp } from '../../features/userWordpress/targetWpSlice';
 import { addWordPress, selectWordPressList } from '../../features/userWordpress/wordPressListSlice';
+import i18next from '../../i18n';
 
 const schema = z.object({
   url: z
     .string()
-    .url({ message: 'Invalid url,check start with https://' })
+    .url({ message: i18next.t('addWordPress.warnWrongUrl') })
     .startsWith('https://', 'Accepts only htts://')
     .transform((val) => val.replace(/\/$/, '')),
-  userName: z.string().min(1, { message: 'User name is required.' }),
-  password: z.string().min(1, { message: 'Password is required.' }),
+  userName: z.string().min(1, { message: i18next.t('addWordPress.warnUsername') }),
+  password: z.string().min(1, { message: i18next.t('addWordPress.warnPassword') }),
 });
 
 export type AddWordPressInputs = z.infer<typeof schema>;
@@ -47,17 +49,18 @@ const AddWordPress = () => {
   const dispatch = useAppDispatch();
   const { isError, error, success, targetWp } = useAppSelector(selectTargetWp);
   const { wordPressList } = useAppSelector(selectWordPressList);
-
+  const { t } = useTranslation();
   // error dialog
   useEffect(() => {
     if (isError) {
       Swal.fire({
-        title: 'Error!',
+        title: t('addWordPress.swalErrorTitle') as string,
         html: `${error?.code}\n${error?.message}`,
         icon: 'error',
         confirmButtonText: 'OK',
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError, error?.code, error?.message]);
 
   // navigatation
@@ -95,7 +98,7 @@ const AddWordPress = () => {
       await dispatch(fetchToken(data));
     } else {
       Swal.fire({
-        title: 'Error!',
+        title: t('addWordPress.swalExistTitle') as string,
         html: `WordPress ${data.url} is already exist.`,
         icon: 'error',
         confirmButtonText: 'OK',
@@ -117,7 +120,7 @@ const AddWordPress = () => {
       }}
     >
       <Typography component="h2" variant="h5">
-        Add WordPress
+        {t('addWordPress.componentTitle')}
       </Typography>
       <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ m: 1, width: '100%' }}>
         <Paper elevation={3} sx={{ margin: '20px', padding: '20px' }}>
@@ -136,7 +139,7 @@ const AddWordPress = () => {
                   ),
                 }}
                 id="url"
-                label="WordPress URL"
+                label={t('addWordPress.formLabelUrl')}
                 error={!!errors.url}
                 helperText={errors.url?.message}
                 sx={{ mt: 4 }}
@@ -158,7 +161,7 @@ const AddWordPress = () => {
                   ),
                 }}
                 id="userName"
-                label="User name"
+                label={t('addWordPress.formLabelUsername')}
                 error={!!errors.userName}
                 helperText={errors.userName?.message}
                 sx={{ mt: 4 }}
@@ -180,7 +183,7 @@ const AddWordPress = () => {
                   ),
                 }}
                 id="pasword"
-                label="Password"
+                label={t('addWordPress.formLabelPassword')}
                 error={!!errors.password}
                 helperText={errors.password?.message}
                 sx={{ mt: 4 }}
@@ -196,7 +199,7 @@ const AddWordPress = () => {
             }}
           >
             <Button type="submit" size="medium" variant="contained" color="primary">
-              Add to List
+              {t('addWordPress.buttonAdd')}
             </Button>
             <Button
               size="medium"
@@ -205,7 +208,7 @@ const AddWordPress = () => {
               sx={{ ml: 2 }}
               onClick={() => reset()}
             >
-              Reset
+              {t('addWordPress.buttonReset')}
             </Button>
           </Box>
         </Paper>

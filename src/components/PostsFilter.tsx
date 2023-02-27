@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import LoopIcon from '@mui/icons-material/Loop';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -17,9 +19,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTime } from 'luxon';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
+import Tooltip from '@mui/material/Tooltip';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../app/hooks';
 import az from '../assets/sort_asc.svg';
 import za from '../assets/sort_desc.svg';
@@ -113,7 +115,7 @@ export type PostFilterProps = {
 
 const PostsFilter = (props: PostFilterProps) => {
   const { targetWp } = props;
-
+  const { t } = useTranslation();
   // redux dispatch
   const dispatch = useAppDispatch();
 
@@ -210,7 +212,7 @@ const PostsFilter = (props: PostFilterProps) => {
                 px: 4,
               }}
             >
-              <Typography variant="h5">Posts(all optional)</Typography>
+              <Typography variant="h5">{t('postsFilter.componentTitle')}</Typography>
             </Box>
             <Box sx={{ mx: 2, my: 3 }} component="form" onSubmit={handleSubmit(onSubmit)}>
               <Grid
@@ -222,7 +224,11 @@ const PostsFilter = (props: PostFilterProps) => {
                 alignItems="center"
               >
                 <Grid item xs={12} sm={7}>
-                  <TextField label="Search" fullWidth {...register('search')} />
+                  <TextField
+                    label={t('postsFilter.searchWord')}
+                    fullWidth
+                    {...register('search')}
+                  />
                 </Grid>
                 <Grid item xs={6} sm={2}>
                   <Controller
@@ -240,7 +246,7 @@ const PostsFilter = (props: PostFilterProps) => {
                             inputRef={ref}
                             {...params}
                             InputLabelProps={{ shrink: true }}
-                            label="OrderBy"
+                            label={t('postsFilter.orderBy')}
                           />
                         )}
                       />
@@ -254,7 +260,7 @@ const PostsFilter = (props: PostFilterProps) => {
                     defaultValue
                     render={({ field: { onChange, value, ...field } }) => (
                       <FormControlLabel
-                        label="Order"
+                        label={t('postsFilter.sortOrder')}
                         labelPlacement="top"
                         control={<SortSwitch onChange={onChange} checked={value} {...field} />}
                       />
@@ -279,11 +285,13 @@ const PostsFilter = (props: PostFilterProps) => {
                               inputRef={ref}
                               {...params}
                               InputLabelProps={{ shrink: true }}
-                              label="Category"
+                              label={t('postsFilter.category')}
                             />
-                            <IconButton onClick={handleReloadCategories}>
-                              <LoopIcon />
-                            </IconButton>
+                            <Tooltip title={t('postsFilter.reloadCategories')}>
+                              <IconButton onClick={handleReloadCategories}>
+                                <LoopIcon />
+                              </IconButton>
+                            </Tooltip>
                           </Stack>
                         )}
                       />
@@ -309,11 +317,13 @@ const PostsFilter = (props: PostFilterProps) => {
                               inputRef={ref}
                               {...params}
                               InputLabelProps={{ shrink: true }}
-                              label="Tags"
+                              label={t('postsFilter.tags')}
                             />
-                            <IconButton onClick={handleReloadTags}>
-                              <LoopIcon />
-                            </IconButton>
+                            <Tooltip title={t('postsFilter.reloadTags')}>
+                              <IconButton onClick={handleReloadTags}>
+                                <LoopIcon />
+                              </IconButton>
+                            </Tooltip>
                           </Stack>
                         )}
                       />
@@ -327,15 +337,19 @@ const PostsFilter = (props: PostFilterProps) => {
                     control={control}
                     rules={{
                       validate: {
-                        isValid: (date) => date == null || date?.isValid || 'Invalid date',
-                        isFuture: (date) => isFuture(date) || 'Enter past date',
+                        isValid: (date) =>
+                          date == null ||
+                          date?.isValid ||
+                          (t('postsFilter.dateErrorInvalid') as string),
+                        isFuture: (date) =>
+                          isFuture(date) || (t('postsFilter.dateErrorPast') as string),
                       },
                     }}
                     render={({ field: { ref, onBlur, name, ...restField }, fieldState }) => (
                       <DatePicker
                         {...restField}
                         inputRef={ref}
-                        label="Post from"
+                        label={t('postsFilter.fromDate')}
                         renderInput={(inputProps) => (
                           <TextField
                             {...inputProps}
@@ -356,17 +370,21 @@ const PostsFilter = (props: PostFilterProps) => {
                     control={control}
                     rules={{
                       validate: {
-                        isValid: (date) => date == null || date?.isValid || 'Invalid date',
-                        isFuture: (date) => isFuture(date) || 'Enter past date',
+                        isValid: (date) =>
+                          date == null ||
+                          date?.isValid ||
+                          (t('postsFilter.dateErrorInvalid') as string),
+                        isFuture: (date) =>
+                          isFuture(date) || (t('postsFilter.dateErrorPast') as string),
                         invalidToDate: (date) =>
-                          invalidToDate(date) || 'Enter future date than from',
+                          invalidToDate(date) || (t('postsFilter.dateErrorPastFrom') as string),
                       },
                     }}
                     render={({ field: { ref, onBlur, name, ...restField }, fieldState }) => (
                       <DatePicker
                         {...restField}
                         inputRef={ref}
-                        label="Post to"
+                        label={t('postsFilter.toDate')}
                         renderInput={(inputProps) => (
                           <TextField
                             {...inputProps}
@@ -382,7 +400,7 @@ const PostsFilter = (props: PostFilterProps) => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <Button type="button" variant="outlined" onClick={() => reset()}>
-                    Reset
+                    {t('postsFilter.buttonReset')}
                   </Button>
                   <Button
                     type="button"
@@ -392,7 +410,7 @@ const PostsFilter = (props: PostFilterProps) => {
                     disabled={getValues('page') === 1}
                     startIcon={<ArrowBackIosNewIcon />}
                   >
-                    Prev 10
+                    {t('postsFilter.buttonPrev10')}
                   </Button>
                   <Button
                     type="button"
@@ -402,7 +420,7 @@ const PostsFilter = (props: PostFilterProps) => {
                     sx={{ marginBottom: { xs: 2, sm: 2, md: 0 } }}
                     endIcon={<NavigateNextIcon />}
                   >
-                    Next 10
+                    {t('postsFilter.buttonNext10')}
                   </Button>
 
                   <Button
@@ -410,7 +428,7 @@ const PostsFilter = (props: PostFilterProps) => {
                     variant="contained"
                     sx={{ marginBottom: { xs: 2, sm: 2, md: 0 } }}
                   >
-                    Submit
+                    {t('postsFilter.buttonSubmit')}
                   </Button>
                 </Grid>
               </Grid>

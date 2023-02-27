@@ -1,0 +1,134 @@
+{
+  "chatBase": {
+    "swalErrorTitle": "ChatGPT required API key",
+    "swalErrorIcon": "warning",
+    "swalErrorText": "Please enter your API key in the settings page.",
+    "errrorDialogTitle": "Error",
+    "errorDialogClose": "Close",
+    "GptModel": "Model",
+    "temperature": "Temperature",
+    "maxTokens": "maxTokens",
+    "prompt": "Prompt",
+    "send": "Send"
+  },
+  "signin": {
+    "signinTitle": "Sign in",
+    "inputLabel": {
+      "email": "Email Address",
+      "password": "Password"
+    },
+    "rememberMe": "Save my email address",
+    "forgotPassword": "Forgot your password?"
+  },
+  "stepperWp": {
+    "stepperTitle": "Create a new article",
+    "step1Title": "Chat with GPT-3",
+    "step2Title": "Edit the article",
+    "step3Title": "Title, tags and category",
+    "buttonNext": "Next",
+    "buttonBack": "Back",
+    "buttonReset": "Reset",
+    "buttonPost": "Post",
+    "buttonFinish": "Finish",
+    "finishMessage": "Your article has been created.",
+    "errorFetchToken": "Error: Failed to fetch token.\n"
+  },
+  "chatPanel": {
+    "promptON": "Prompt ON",
+    "promptOFF": "Prompt OFF",
+    "reset": "Reset",
+    "resetDialogTitle": "Reset Chat logs?",
+    "resetDialogHtml": "<h3>You can not restore this log.</h3>",
+    "resetDialogConfirm": "Yes, Reset",
+    "resetDialogCancel": "Cancel"
+  },
+  "postEditor": {
+    "convertToBalloon": "Convert html to Word Balloon shortcode(require Word Balloon Plugin)"
+  },
+  "postReviewer": {
+    "postTo": "Post to",
+    "postTitle": "Title",
+    "postCategory": "Category",
+    "postTag": "Tags",
+    "postResultSuccess": "Post Success!",
+    "postResultError": "Post Fail!"
+  },
+  "postsFilter": {
+    "componentTitle": "Search Criteria(All optional",
+    "searchWord": "Search Word",
+    "orderBy": "Order By",
+    "sortOrder": "Sort Order",
+    "category": "Category",
+    "tags": "Tags",
+    "fromDate": "Post from",
+    "toDate": "Post to",
+    "buttonReset": "Reset",
+    "buttonPrev10": "Prev 10",
+    "buttonNext10": "Next 10",
+    "buttonSubmit": "Search",
+    "dateErrorInvalid": "Invalid date",
+    "dateErrorPast": "Enter a date in the past",
+    "dateErrorPastFrom": "Enter a date in the future from",
+    "reloadCategories": "Reload Categories",
+    "reloadTags": "Reload Tags"
+  },
+  "targetWp": {
+    "fabAddPost": "Create new post"
+  },
+  "appDrawer": {
+    "drawerTooltipWpList": "Your WordPress List",
+    "drawerTooltipSettings": "Settings",
+    "drawerTooltipSignout": "Sign out"
+  },
+  "menuBar": {
+    "title": "AIWriter - Write with GPT-3"
+  },
+  "passwrodReset": {
+    "swalTitle": "Send Reset Link",
+    "swalText": "Please check  your email to reset your password.",
+    "labelEmail": "Email Address",
+    "buttonSend": "Reset password",
+    "backToSingin": "Back to Sign in"
+  },
+  "addWordPress": {
+    "componentTitle": "Add WordPress to List",
+    "warnWrongUrl": "Please enter a valid WordPress URL with start https://",
+    "warnUsername": "User name is required",
+    "warnPassword": "Password is required",
+    "swalErrorTitle": "Error",
+    "formLabelUrl": "WordPress URL",
+    "formLabelUsername": "User name",
+    "formLabelPassword": "Password",
+    "buttonAdd": "Add to List",
+    "buttonReset": "Reset"
+  },
+  "wordPressList": {
+    "headerAction": "Action",
+    "headerWpTitle": "WordPress Title",
+    "headerWpUsername": "User name",
+    "addPostErrorTitle": "Error!",
+    "addPostErrorText": "Can not find information for posts.",
+    "deleteTitle": "Delete from list？",
+    "deleteText": "Are you sure to delete this wordpress？",
+    "deleteConfirm": "Delete",
+    "deleteCancel": "Cancel",
+    "deleteSuccessTitle": "Success!",
+    "deleteSuccessText": "WordPress has been deleted from list.",
+    "deleteErrorTitle": "Error!",
+    "deleteErrorText": "Can not find WordPress to delete.",
+    "tooltipCreatePost": "Create new post",
+    "tooltipInfo": "WordPress information",
+    "tooltipDelete": "Delete from list",
+    "tooltipAddWordPress": "Add WordPress List",
+    "dataGridTitleName": "Name",
+    "dataGridUsername": "User name",
+    "dataGridUrl": "URL",
+    "emptyListMessage": "WordPress list is empty. Please add WordPress to list."
+  },
+  "settings": {
+    "swalSuccessTitle": "Save Success",
+    "swalErrorTitle": "Error",
+    "buttonSave": "Save",
+    "buttonReset": "Reset"
+  }
+}

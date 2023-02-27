@@ -8,6 +8,7 @@ import Fab from '@mui/material/Fab';
 import IconButton from '@mui/material/IconButton';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -23,11 +24,11 @@ const WordPressList = () => {
   const { wordPressList } = useAppSelector(selectWordPressList);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const columns: GridColDef[] = [
     {
       field: 'action',
-      headerName: 'Action',
+      headerName: t('wordPressList.headerAction') as string,
       sortable: false,
       renderCell: (params) => {
         const onClickInfo = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -54,7 +55,11 @@ const WordPressList = () => {
             dispatch(setTargetWp(wp));
             navigate('/wordpress');
           } else {
-            Swal.fire('Error!', 'Can not find WordPress from List.', 'error');
+            Swal.fire({
+              title: t('wordPressList.addPostErrorTitle') as string,
+              text: t('wordPressList.addPostErrorText') as string,
+              icon: 'error',
+            });
           }
         };
 
@@ -63,21 +68,30 @@ const WordPressList = () => {
           const currentRow = params.row;
           // delete confirm
           Swal.fire({
-            title: 'Confirm delete?',
-            text: 'Are you sure to delete this WordPress?',
+            title: t('wordPressList.deleteTitle') as string,
+            text: t('wordPressList.deleteText') as string,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
+            confirmButtonText: t('wordPressList.deleteConfirm') as string,
+            cancelButtonText: t('wordPressList.deleteCancel') as string,
           }).then((result) => {
             if (result.isConfirmed) {
               const wp = wordPressList.find((w) => w.id === currentRow.id);
               if (wp) {
                 dispatch(deleteWordPress(wp.id));
-                Swal.fire('Deleted!', 'This WordPress deleted from List.', 'success');
+                Swal.fire(
+                  t('wordPressList.deleteSuccessTitle') as string,
+                  t('wordPressList.deleteSuccessText') as string,
+                  'success'
+                );
               } else {
-                Swal.fire('Error!', 'Can not find WordPress from List.', 'error');
+                Swal.fire(
+                  t('wordPressList.deleteErrorTitle') as string,
+                  t('wordPressList.deleteErrorText') as string,
+                  'error'
+                );
               }
             }
           });
@@ -85,17 +99,17 @@ const WordPressList = () => {
         // <Stack direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={1}>
         return (
           <ButtonGroup>
-            <Tooltip title="Create new Post">
+            <Tooltip title={t('wordPressList.tooltipCreatePost')}>
               <IconButton onClick={onClickPostAdd} sx={{ px: '2px' }}>
                 <PostAddIcon color="primary" />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Show WordPress Info">
+            <Tooltip title={t('wordPressList.tooltipInfo')}>
               <IconButton onClick={onClickInfo} sx={{ px: '2px' }}>
                 <InfoIcon color="info" />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Delete WordPress">
+            <Tooltip title={t('wordPressList.tooltipDelete')}>
               <IconButton onClick={onClickDelete} sx={{ px: '2px' }}>
                 <DeleteForeverIcon color="warning" />
               </IconButton>
@@ -106,12 +120,12 @@ const WordPressList = () => {
     },
     {
       field: 'name',
-      headerName: 'Title',
+      headerName: t('wordPressList.dataGridTitleName') as string,
       width: 320,
     },
     {
       field: 'userName',
-      headerName: 'User name',
+      headerName: t('wordPressList.dataGridUsername') as string,
       width: 120,
     },
     {
@@ -136,14 +150,14 @@ const WordPressList = () => {
           spacing: 2,
         }}
       >
-        <Tooltip title="Add WordPress">
+        <Tooltip title={t('wordPressList.tooltipAddWordPress')}>
           <Fab color="primary" onClick={addWordPress}>
             <AddIcon />
           </Fab>
         </Tooltip>
       </Box>
       {wordPressList.length === 0 ? (
-        <div>WordPress List is emptyl</div>
+        <div>{t('wordPressList.emptyListMessage')}</div>
       ) : (
         <Box>
           <DataGrid

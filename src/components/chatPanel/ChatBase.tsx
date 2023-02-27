@@ -13,10 +13,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Slider from '@mui/material/Slider';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
@@ -72,6 +73,8 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
     defaultValues: { ...defaultValues, chatGptApiKey: settings?.chatGptApiKey },
   });
 
+  const { t, ready } = useTranslation();
+
   const [openErrorDialog, setErrorOpenDialog] = useState(false);
   useEffect(() => {
     if (isError) {
@@ -105,9 +108,9 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
   useEffect(() => {
     if (settings.chatGptApiKey.length === 0) {
       Swal.fire({
-        title: 'ChatGPT required APIKey',
+        title: t('chatBase.swalErrorTitle') as string,
         icon: 'warning',
-        text: 'Enter ChatGPT APIKey',
+        text: t('chatBase.swalErrorText') as string,
       });
       navigate('/settings');
     }
@@ -122,7 +125,9 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
     const promptLength =
       typeof data.prompt === 'undefined' ? 40 : (data.prompt as string).length * 4;
     const maxTokens = selectedMaxTokens - promptLength;
-    await dispatch(fetchChatGpt({ ...data, max_tokens: maxTokens }));
+    let adjTemperature = getValues('temperature') ?? 100;
+    adjTemperature = (adjTemperature * 2) / 100;
+    await dispatch(fetchChatGpt({ ...data, max_tokens: maxTokens, temperature: adjTemperature }));
   };
 
   const handleCloseErrorDialog = () => {
@@ -132,7 +137,7 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
   };
 
   return (
-    <>
+    <Suspense>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Backdrop
           sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -147,13 +152,13 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Error!</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{t('chatBase.errorDialogTitle')}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">{error.error.message}</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseErrorDialog} autoFocus>
-            I got it.
+            {t('chatBase.errorDialogClose')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -176,7 +181,7 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
                       inputRef={ref}
                       {...params}
                       InputLabelProps={{ shrink: true }}
-                      label="model"
+                      label={t('chatBase.GptModel')}
                       fullWidth
                     />
                   )}
@@ -191,7 +196,7 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
               defaultValue={100}
               render={({ field: { onChange, value, ...field } }) => (
                 <FormControlLabel
-                  label="Temperature"
+                  label={t('chatBase.temperature')}
                   labelPlacement="top"
                   sx={{ width: '100%' }}
                   control={<Slider defaultValue={100} onChange={onChange} {...field} />}
@@ -207,15 +212,16 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
               render={({ field: { ref, onChange, ...field } }) => (
                 <Autocomplete
                   options={maxTokensOptions}
+                  getOptionLabel={(option) => option.toString()}
                   onChange={(_, data) => onChange(data)}
-                  defaultValue={2048}
                   renderInput={(params) => (
                     <TextField
                       {...field}
+                      defaultValue={2048}
                       inputRef={ref}
                       {...params}
                       InputLabelProps={{ shrink: true }}
-                      label="maxTokens"
+                      label={t('chatBase.maxTokens')}
                       fullWidth
                     />
                   )}
@@ -226,18 +232,18 @@ const ChatBase: React.FC<ChatBaseProps> = (props) => {
         </Stack>
         <Box sx={{ display: 'flex', spacing: 2 }}>
           <TextField
-            label="Prompt"
+            label={t('chatBase.prompt')}
             fullWidth
             multiline
             {...register('prompt')}
             sx={{ flexGrow: 1, paddingRight: '8px' }}
           />
           <Button type="submit" variant="contained" startIcon={<SendIcon />}>
-            Send
+            {t('chatBase.send')}
           </Button>
         </Box>
       </Box>
-    </>
+    </Suspense>
   );
 };
 

@@ -9,6 +9,7 @@ import App from './App';
 import store from './app/store';
 import './index.css';
 import theme from './theme';
+import './i18n';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,

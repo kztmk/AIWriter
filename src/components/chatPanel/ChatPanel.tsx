@@ -3,7 +3,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { useContext, useState } from 'react';
+import { Suspense, useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
 
 import type { ChatGptLog } from '../../types';
@@ -19,11 +20,11 @@ import ChatListItem from './ChatListItem';
  */
 const ChatPanel = (props: Partial<StepperProps>) => {
   const { currentState, setCurrentState } = useContext(WpPostStepperInputData);
-
+  const { t } = useTranslation();
   const { handleNext } = props;
   const [chatLogs, setChatLogs] = useState<ChatGptLog[]>(currentState.chatPanel.chatLogs);
   const [showPrompt, setShowPrompt] = useState(currentState.chatPanel.showPrompt);
-  const [showPromptLabel, setShowPromptLabel] = useState('Prompt ON');
+  const [showPromptLabel, setShowPromptLabel] = useState(t('chatPanel.promptON'));
 
   const addChatLogs = (chatlog: ChatGptLog) => {
     setChatLogs([...chatLogs, chatlog]);
@@ -31,19 +32,20 @@ const ChatPanel = (props: Partial<StepperProps>) => {
 
   const handleShowPrompt = () => {
     setShowPrompt(!showPrompt);
-    const promptLabel = showPrompt ? 'Prompt OFF' : 'Prompt ON';
+    const promptLabel = showPrompt ? t('chatPanel.promptON') : t('chatPanel.promptOFF');
     setShowPromptLabel(promptLabel);
   };
 
   const handleReset = () => {
     Swal.fire({
-      title: 'Reset Chat logs?',
-      html: '<h3>You can not restore this log.</h3>',
+      title: t('chatPanel.resetDialogTitle') as string,
+      html: t('chatPanel.resetDialogHtml') as string,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Reset it.',
+      confirmButtonText: t('chatPanel.resetDialogConfirm') as string,
+      cancelButtonText: t('chatPanel.resetDialogCancel') as string,
     }).then((resutl) => {
       if (resutl.isConfirmed) {
         setChatLogs([]);
@@ -82,7 +84,7 @@ const ChatPanel = (props: Partial<StepperProps>) => {
           variant="contained"
           startIcon={<SettingsBackupRestoreIcon />}
         >
-          Reset
+          {t('chatPanel.reset')}
         </Button>
       </Box>
       <Box
@@ -97,7 +99,7 @@ const ChatPanel = (props: Partial<StepperProps>) => {
           sx={{
             minWidth: '450px',
             minHeight: '200px',
-            maxHeight: '500px',
+            maxHeight: '450px',
             border: '2px solid #333',
             borderRadius: '5px',
             marginY: '16px',
@@ -116,7 +118,7 @@ const ChatPanel = (props: Partial<StepperProps>) => {
       </Box>
       <Box sx={{ display: 'flex', justigyContent: 'flex-end' }}>
         <Button variant="contained" onClick={handleStepperNext} sx={{ mt: 3, ml: 1 }}>
-          Next
+          {t('stepperWp.buttonNext')}
         </Button>
       </Box>
     </>
