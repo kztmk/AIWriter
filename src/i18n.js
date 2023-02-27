@@ -1,4 +1,4 @@
-import i18n from 'i18next';
+import * as i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import Backend from 'i18next-http-backend';
@@ -16,7 +16,7 @@ const resources = {
   },
 };
 
-i18n
+const i18n = i18next
   .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next) // passes i18n down to react-i18next

@@ -20,16 +20,15 @@ import fetchName from '../../features/userWordpress/asyncThunk/fetchName';
 import fetchToken from '../../features/userWordpress/asyncThunk/fetchToken';
 import { selectTargetWp } from '../../features/userWordpress/targetWpSlice';
 import { addWordPress, selectWordPressList } from '../../features/userWordpress/wordPressListSlice';
-import i18next from '../../i18n';
 
 const schema = z.object({
   url: z
     .string()
-    .url({ message: i18next.t('addWordPress.warnWrongUrl') })
+    .url({ message: 'https:// で始まる有効なURLを入力してください' })
     .startsWith('https://', 'Accepts only htts://')
     .transform((val) => val.replace(/\/$/, '')),
-  userName: z.string().min(1, { message: i18next.t('addWordPress.warnUsername') }),
-  password: z.string().min(1, { message: i18next.t('addWordPress.warnPassword') }),
+  userName: z.string().min(1, { message: 'ユーザ名は必須です。' }),
+  password: z.string().min(1, { message: 'パスワードは必須です。' }),
 });
 
 export type AddWordPressInputs = z.infer<typeof schema>;
